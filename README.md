@@ -70,7 +70,8 @@
 │   ├── DEVELOPMENT.md            # راهنمای توسعه و الگوهای مهندسی
 │   ├── RUN_LINUX.md              # راهنمای اجرای محلی روی لینوکس
 │   ├── RUN_MACOS.md              # راهنمای اجرای محلی روی مک‌اواس
-│   └── RUN_WINDOWS.md            # راهنمای اجرای محلی روی ویندوز
+│   ├── RUN_WINDOWS.md            # راهنمای اجرای محلی روی ویندوز
+│   └── TUNNEL_SHARING_GUIDE.md   # راهنمای اشتراک‌گذاری و تانل آنلاین لوکال
 ├── media/                        # پوشه مدیا بیرون از کدهای پروژه (در دندی)
 │   └── articles/demo/            # تصاویر عکاسی واقعی مقالات
 ├── static/
@@ -108,6 +109,7 @@
 - 🐧 **[راهنمای اجرای محلی روی گنو/لینوکس (Linux Setup Guide)](docs/RUN_LINUX.md)**: پوشش کامل توزیع‌های Ubuntu، Debian، Fedora و Arch.
 - 🍎 **[راهنمای اجرای محلی روی مک‌اواس (macOS Setup Guide)](docs/RUN_MACOS.md)**: پشتیبانی پردازنده‌های Apple Silicon (M1..M4) و Intel.
 - 🪟 **[راهنمای اجرای محلی روی ویندوز (Windows Setup Guide)](docs/RUN_WINDOWS.md)**: دستورات کامل PowerShell، CMD و Git Bash.
+- 🌐 **[راهنمای تانل و اشتراک‌گذاری عمومی لوکال (Public Tunnel Guide)](docs/TUNNEL_SHARING_GUIDE.md)**: اشتراک آنلاین پروژه لوکال روی اینترنت با Cloudflare و Ngrok.
 
 ---
 
