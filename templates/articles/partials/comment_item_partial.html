@@ -1,0 +1,24 @@
+<div class="p-6 rounded-2xl glass-panel border border-border-color space-y-3.5 transition-all duration-300 hover:border-brand-purple/40">
+  <div class="flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <!-- Author Initials Avatar -->
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-orange to-brand-purple flex items-center justify-center text-white text-xs font-black shadow-sm">
+        {{ comment.author.username|slice:":1"|upper }}
+      </div>
+      <div>
+        <h5 class="text-xs font-bold text-text-primary">{{ comment.author.username }}</h5>
+        <span class="text-[10px] text-text-muted">{{ comment.created_at|date:"Y/m/d H:i" }}</span>
+      </div>
+    </div>
+
+    <!-- Verified Reader Pill -->
+    <span class="px-2.5 py-1 rounded-lg text-[10px] font-semibold bg-brand-purple/10 text-brand-purple border border-brand-purple/20">
+      عضو دَندی
+    </span>
+  </div>
+
+  <!-- Content -->
+  <p class="text-xs text-text-secondary leading-relaxed whitespace-pre-line pr-3 border-r-2 border-brand-orange/50 font-normal">
+    {{ comment.content }}
+  </p>
+</div>

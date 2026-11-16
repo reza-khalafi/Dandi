@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}عضویت در دَندی | ثبت‌نام کاربر جدید{% endblock %}
+
+{% block content %}
+<div class="min-h-[calc(100vh-18rem)] flex items-center justify-center px-4 py-16 relative overflow-hidden">
+  
+  <!-- Ambient background glow -->
+  <div class="absolute -top-16 left-1/2 -translate-x-1/2 w-[30rem] h-[30rem] rounded-full bg-brand-orange/15 blur-3xl pointer-events-none"></div>
+
+  <div class="w-full max-w-md relative z-10">
+    <div class="rounded-3xl p-[1px] bg-gradient-to-b from-brand-orange/40 via-brand-purple/40 to-transparent shadow-2xl">
+      <div class="rounded-[23px] glass-panel p-8 sm:p-10 space-y-6">
+        
+        <!-- Header with True Consistent Dandi Logo -->
+        <div class="text-center space-y-3">
+          <a href="{% url 'articles:home' %}" class="inline-flex items-center gap-3.5 group focus:outline-none">
+            <div class="h-12 w-12 rounded-2xl bg-gradient-to-tr from-brand-orange to-brand-purple p-[1.5px] shadow-lg shadow-brand-purple/20 group-hover:scale-105 transition-transform duration-300">
+              <div class="w-full h-full rounded-[14px] bg-card-bg flex items-center justify-center p-2">
+                <img src="{% static 'images/logo.svg' %}" alt="Dandi Logo" class="w-full h-full object-contain">
+              </div>
+            </div>
+            <div class="flex flex-col text-right">
+              <div class="flex items-baseline gap-2">
+                <span class="text-3xl font-black tracking-tight text-text-primary group-hover:text-brand-orange transition-colors">دَندی</span>
+                <span class="text-xs font-black uppercase tracking-widest text-brand-purple">DANDI</span>
+              </div>
+              <span class="text-[10px] text-text-muted font-medium">مجله اندیشه‌های آزاد و نو</span>
+            </div>
+          </a>
+          
+          <h2 class="text-lg font-black text-text-primary pt-2">عضویت در خانواده دَندی</h2>
+          <p class="text-xs text-text-muted leading-relaxed">در کمتر از یک دقیقه حساب کاربری خود را ایجاد نمایید</p>
+        </div>
+
+        <!-- Form Errors -->
+        {% if form.non_field_errors %}
+          <div class="p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 text-xs">
+            {% for error in form.non_field_errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <!-- Register Form -->
+        <form method="POST" action="{% url 'accounts:register' %}" class="space-y-4">
+          {% csrf_token %}
+
+          <div>
+            <label class="block text-xs font-bold text-text-primary mb-1.5">نام کاربری</label>
+            {{ form.username }}
+            {% if form.username.errors %}
+              <p class="text-[11px] text-rose-500 mt-1">{{ form.username.errors.0 }}</p>
+            {% endif %}
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-text-primary mb-1.5">ایمیل (اختیاری)</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+              <p class="text-[11px] text-rose-500 mt-1">{{ form.email.errors.0 }}</p>
+            {% endif %}
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-text-primary mb-1.5">رمز عبور</label>
+            {{ form.password }}
+            {% if form.password.errors %}
+              <p class="text-[11px] text-rose-500 mt-1">{{ form.password.errors.0 }}</p>
+            {% endif %}
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-text-primary mb-1.5">تکرار رمز عبور</label>
+            {{ form.password_confirm }}
+            {% if form.password_confirm.errors %}
+              <p class="text-[11px] text-rose-500 mt-1">{{ form.password_confirm.errors.0 }}</p>
+            {% endif %}
+          </div>
+
+          <button 
+            type="submit" 
+            class="w-full py-3.5 rounded-xl bg-gradient-to-r from-brand-orange to-brand-purple text-white text-xs font-bold shadow-lg shadow-brand-purple/20 hover:opacity-95 hover:shadow-xl transition duration-200">
+            تکمیل ثبت‌نام و ورود
+          </button>
+        </form>
+
+        <!-- Footer Switch -->
+        <div class="text-center text-xs text-text-muted pt-3 border-t border-border-color">
+          <span>قبلاً ثبت‌نام کرده‌اید؟</span>
+          <a href="{% url 'accounts:login' %}" class="font-bold text-brand-purple hover:text-brand-orange mr-1 transition">
+            ورود به حساب
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

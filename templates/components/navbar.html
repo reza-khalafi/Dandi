@@ -1,0 +1,80 @@
+{% load static %}
+<header class="sticky top-0 z-40 glass-panel border-b border-border-color transition duration-300">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      
+      <!-- Brand & Standalone Logo -->
+      <a href="{% url 'articles:home' %}" class="flex items-center gap-3.5 group focus:outline-none">
+        <div class="h-11 w-11 rounded-2xl bg-gradient-to-tr from-brand-orange to-brand-purple p-[1.5px] shadow-lg shadow-brand-purple/20 group-hover:scale-105 transition-transform duration-300">
+          <div class="w-full h-full rounded-[14px] bg-card-bg flex items-center justify-center p-1.5">
+            <img src="{% static 'images/logo.svg' %}" alt="لوگوی دندی" class="w-full h-full object-contain">
+          </div>
+        </div>
+        <div class="flex flex-col">
+          <div class="flex items-baseline gap-2">
+            <span class="text-2xl font-black tracking-tight text-text-primary group-hover:text-brand-orange transition-colors">دَندی</span>
+            <span class="text-xs font-black uppercase tracking-widest text-brand-purple">DANDI</span>
+          </div>
+          <span class="text-[10px] text-text-muted font-medium -mt-0.5 hidden sm:inline">مجله اندیشه‌های آزاد، دانش و روایت‌های نو</span>
+        </div>
+      </a>
+
+      <!-- Search Input in Header (Desktop) -->
+      <div class="hidden md:flex flex-1 max-w-md mx-8">
+        <div class="relative w-full">
+          <input 
+            type="text" 
+            id="live-search-input" 
+            value="{{ search_query|default:'' }}"
+            placeholder="جستجوی مقالات، موضوعات، نویسندگان..." 
+            class="w-full pl-10 pr-4 py-2.5 text-xs rounded-2xl border border-border-color bg-bg-secondary/70 text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-brand-purple/50 focus:border-brand-purple transition duration-200"
+          >
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-muted">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Auth & Theme Switcher -->
+      <div class="flex items-center gap-3">
+        
+        <!-- Multi-Theme Switcher -->
+        {% include 'components/theme_switcher.html' %}
+
+        {% if user.is_authenticated %}
+          <!-- Authenticated User Menu -->
+          <div class="flex items-center gap-2.5">
+            <div class="hidden sm:flex flex-col text-left">
+              <span class="text-xs font-bold text-text-primary">{{ user.username }}</span>
+              <span class="text-[10px] text-emerald-500 font-semibold">عضو فعال</span>
+            </div>
+            
+            <a href="{% url 'accounts:logout' %}" 
+               class="px-3.5 py-2 text-xs font-semibold rounded-xl border border-border-color text-rose-500 hover:bg-rose-500/10 transition duration-200 flex items-center gap-1.5"
+               title="خروج از حساب">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+              </svg>
+              <span class="hidden sm:inline">خروج</span>
+            </a>
+          </div>
+        {% else %}
+          <!-- Login & Register Actions -->
+          <div class="flex items-center gap-2">
+            <a href="{% url 'accounts:login' %}" 
+               class="px-3.5 py-2 text-xs font-bold rounded-xl border border-border-color hover:border-brand-purple/50 text-text-primary hover:bg-card-bg transition duration-200">
+              ورود
+            </a>
+            <a href="{% url 'accounts:register' %}" 
+               class="px-4 py-2 text-xs font-bold rounded-xl bg-gradient-to-r from-brand-orange to-brand-purple text-white shadow-md shadow-brand-purple/20 hover:opacity-95 hover:shadow-lg transition duration-200">
+              عضویت رایگان
+            </a>
+          </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</header>

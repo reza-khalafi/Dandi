@@ -1,0 +1,74 @@
+{% load static %}
+<footer class="mt-24 border-t border-border-color bg-bg-secondary/80 backdrop-blur-md">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+      
+      <!-- Brand & Standalone Logo -->
+      <div class="space-y-4 md:col-span-2">
+        <div class="flex items-center gap-3.5">
+          <div class="h-10 w-10 rounded-2xl bg-gradient-to-tr from-brand-orange to-brand-purple p-[1.5px] shadow-sm">
+            <div class="w-full h-full rounded-[14px] bg-card-bg flex items-center justify-center p-1.5">
+              <img src="{% static 'images/logo.svg' %}" alt="Dandi Logo" class="w-full h-full object-contain">
+            </div>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-2xl font-black text-text-primary">دَندی</span>
+            <span class="text-xs font-black uppercase tracking-widest text-brand-purple">DANDI</span>
+          </div>
+        </div>
+        
+        <p class="text-xs text-text-secondary leading-relaxed max-w-md">
+          دَندی، بستر نشر اندیشه‌های آزاد، پژوهش‌های ژرف و روایت‌های الهام‌بخش است. کاوشی پیوسته در ساحت فلسفه، علم، هنر، معماری و سبک زندگی معاصر با رعایت والاترین استانداردهای بصری و محتوایی.
+        </p>
+
+        <div class="flex items-center gap-3 pt-2 text-xs text-text-muted">
+          <span>طراحی شده با Django 6 و Tailwind CSS</span>
+          <span>•</span>
+          <span>فونت یکپارچه وزیرمتن</span>
+        </div>
+      </div>
+
+      <!-- Quick Navigation -->
+      <div class="space-y-3">
+        <h4 class="text-xs font-bold uppercase tracking-wider text-text-primary">بخش‌های سایت</h4>
+        <ul class="space-y-2 text-xs text-text-secondary">
+          <li><a href="{% url 'articles:home' %}" class="hover:text-brand-orange transition">صفحه اصلی</a></li>
+          <li><a href="{% url 'accounts:register' %}" class="hover:text-brand-orange transition">عضویت در دَندی</a></li>
+          <li><a href="{% url 'accounts:login' %}" class="hover:text-brand-orange transition">ورود کاربران</a></li>
+        </ul>
+      </div>
+
+      <!-- Architecture & System Highlights -->
+      <div class="space-y-3">
+        <h4 class="text-xs font-bold uppercase tracking-wider text-text-primary">معماری و استاندارد</h4>
+        <div class="p-4 rounded-2xl glass-panel text-[11px] text-text-secondary space-y-2 border border-border-color">
+          <div class="flex items-center justify-between">
+            <span>الگوی مهندسی:</span>
+            <span class="font-bold text-brand-purple">View-Service-Repo</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span>لود مقالات:</span>
+            <span class="font-bold text-brand-orange">Infinite Lazy Scroll</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span>سامانه تم:</span>
+            <span class="font-bold text-emerald-500">۴ تم تطبیقی</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span>حجم مقالات:</span>
+            <span class="font-bold text-indigo-400">بیش از ۳۰۰۰ کلمه</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Copyright Bar -->
+    <div class="pt-8 mt-12 border-t border-border-color/70 flex flex-col sm:flex-row items-center justify-between text-xs text-text-muted gap-4">
+      <p>© ۲۰۲۶ دندی (Dandi Magazine). کلیه حقوق محفوظ است.</p>
+      <div class="flex items-center gap-4">
+        <span>ساخته شده با عشق به خرد، دانش و وب فارسی</span>
+      </div>
+    </div>
+  </div>
+</footer>
