@@ -20,12 +20,12 @@ from apps.core.management.commands.article_content_generator import (
 
 
 class Command(BaseCommand):
-    help = 'Seeds exactly 50 rich, comprehensive 3000+ word articles with guaranteed portable photos across any machine.'
+    help = 'Seeds all categories with rich 3000+ word articles, ensuring zero empty categories.'
 
     def handle(self, *args, **options):
-        self.stdout.write(self.style.NOTICE('Starting fully portable Dandi database seeding (50 articles)...'))
+        self.stdout.write(self.style.NOTICE('Starting comprehensive Dandi seeding across ALL categories...'))
 
-        # 1. Ensure MEDIA directory and copy/generate seed photos
+        # 1. Synchronize seed photos to MEDIA_ROOT
         dest_media_dir = Path(settings.MEDIA_ROOT) / 'articles' / 'demo'
         dest_media_dir.mkdir(parents=True, exist_ok=True)
 
@@ -35,7 +35,7 @@ class Command(BaseCommand):
                 dst_file = dest_media_dir / src_file.name
                 if not dst_file.exists() or dst_file.stat().st_size != src_file.stat().st_size:
                     shutil.copy2(src_file, dst_file)
-            self.stdout.write(self.style.SUCCESS(f'Synchronized seed photos from {source_photos_dir.name} to MEDIA_ROOT.'))
+            self.stdout.write(self.style.SUCCESS('Synchronized seed photos to MEDIA_ROOT.'))
 
         # 2. Users
         admin_user, _ = User.objects.get_or_create(
@@ -64,7 +64,7 @@ class Command(BaseCommand):
 
         authors = [admin_user, demo_user]
 
-        # 3. Categories (3 core domains)
+        # 3. Categories (All 6 categories)
         categories_data = [
             {
                 'name': 'اندیشه، فلسفه و سبک زندگی',
@@ -86,6 +86,27 @@ class Command(BaseCommand):
                 'description': 'زیبایی‌شناسی، تایپوگرافی، روایت‌گری، دیزاین معاصر و تجربه ادراک حسی.',
                 'color_accent': 'amber',
                 'order': 3
+            },
+            {
+                'name': 'هوش مصنوعی و آینده‌پژوهی',
+                'slug': 'artificial-intelligence',
+                'description': 'عامل‌های خودمختار، مدل‌های استدلال ژرف، پردازش زبان و مرزهای هوش ماشین.',
+                'color_accent': 'violet',
+                'order': 4
+            },
+            {
+                'name': 'معماری نرم‌افزار و مهندسی سیستم',
+                'slug': 'software-architecture',
+                'description': 'معماری تمیز، مایکروسرویس‌ها، کشینگ، مقیاس‌پذیری و الگوهای پایدار مهندسی.',
+                'color_accent': 'orange',
+                'order': 5
+            },
+            {
+                'name': 'طراحی محصول و دیزاین سیستم',
+                'slug': 'design-systems',
+                'description': 'دیزاین سیستم‌ها، تایپوگرافی فارسی، روانشناسی رابط کاربری و موشن دیزاین.',
+                'color_accent': 'amber',
+                'order': 6
             }
         ]
 
@@ -142,7 +163,6 @@ class Command(BaseCommand):
             'articles/demo/photo-16.jpg'
         ]
 
-        # Verify all photos exist; if any missing on another machine, create fallback
         for rel_path in available_photos:
             full_p = Path(settings.MEDIA_ROOT) / rel_path
             if not full_p.exists():
@@ -151,7 +171,7 @@ class Command(BaseCommand):
                 d.ellipse([100, 100, 400, 400], fill=(139, 92, 246))
                 img.save(full_p, 'JPEG')
 
-        # 5. Articles Metadata (50 articles)
+        # 5. Build Comprehensive Articles List across all 6 categories
         raw_article_meta = [
             # Category 1: Thought & Lifestyle (17 articles)
             (
@@ -607,10 +627,288 @@ class Command(BaseCommand):
                 generate_aesthetics_content,
                 ['design', 'aesthetics'],
                 False
+            ),
+
+            # Category 4: Artificial Intelligence & Future (10 articles)
+            (
+                'عصر عامل‌های خودمختار: چگونه ایجنت‌های هوشمند چرخه توسعه نرم‌افزار را متحول ساختند؟',
+                'autonomous-agents-revolution-in-software-engineering',
+                'تحلیل عمیق نقش عامل‌های خودمختار در برنامه‌نویسی مدرن، تفکیک وظایف و استانداردهای طراحی سیستم‌های تصمیم‌گیر خودکار.',
+                'artificial-intelligence',
+                generate_cosmos_ai_content,
+                ['ai', 'systems-architecture'],
+                True
+            ),
+            (
+                'مدل‌های استدلال عمیق: کاوش در زنجیره اندیشه و رمزگشایی از تصمیم‌گیری‌های پیچیده ماشین',
+                'deep-reasoning-models-and-chain-of-thought',
+                'بررسی مکانیزم‌های تفکر گام‌به‌گام در مدل‌های هوش مصنوعی نوین و ریشه‌کن ساختن خطاهای شناختی و توهمات آماری.',
+                'artificial-intelligence',
+                generate_cosmos_ai_content,
+                ['ai', 'critical-thinking'],
+                False
+            ),
+            (
+                'هم‌راستاسازی هوش مصنوعی (AI Alignment): چالش‌های اخلاقی و فنی در مهار سیستم‌های اَبَرهوشمند',
+                'ai-alignment-ethics-and-superintelligence-safety',
+                'چگونه اطمینان حاصل کنیم که اهداف و ارزش‌های سیستم‌های هوشمند آینده در انطباق کامل با بقا و کرامت انسان باقی می‌مانند؟',
+                'artificial-intelligence',
+                generate_cosmos_ai_content,
+                ['ai', 'philosophy'],
+                True
+            ),
+            (
+                'بینایی ماشین و درک چندوجهی: چگونه مدل‌ها جهان بصری و شنیداری را تفسیر می‌کنند؟',
+                'computer-vision-and-multimodal-perception',
+                'ترجمه پیکسل‌ها و امواج صوتی به بردارها و مفاهیم ادراکی؛ بررسی معماری ویژن ترنسفورمرها (ViT) و کاربردهای آن در رباتیک.',
+                'artificial-intelligence',
+                generate_cosmos_ai_content,
+                ['ai', 'systems-architecture'],
+                False
+            ),
+            (
+                'هوش مصنوعی مولد در علوم زیستی: پیش‌بینی ساختار پروتئین‌ها و طراحی داروهای نو',
+                'generative-ai-in-biology-and-drug-discovery',
+                'از آلفافولد تا طراحی مولکول‌های اختصاصی درمان؛ چگونه یادگیری عمیق انقلاب نیم‌قرنی در زیست‌شناسی محاسباتی آفرید.',
+                'artificial-intelligence',
+                generate_cosmos_ai_content,
+                ['ai', 'critical-thinking'],
+                False
+            ),
+            (
+                'محدودیت‌های بنیادی یادگیری عمیق: آیا هوش مصنوعی عمومی (AGI) بدون درک علّی میسر است؟',
+                'foundational-limits-of-deep-learning-and-causality',
+                'چرا همبستگی آماری جانشین علیت نمی‌شود؟ نقدهای جودیا پرل و افق‌های گذار به معماری‌های ترکیبی نمادین-پیوندی.',
+                'artificial-intelligence',
+                generate_cosmos_ai_content,
+                ['ai', 'philosophy'],
+                False
+            ),
+            (
+                'پردازش زبان طبیعی و زبان‌شناسی محاسباتی: کالبدشکافی بردارهای معنایی و توجه متقاطع',
+                'nlp-computational-linguistics-and-embeddings',
+                'چگونه کلمات به فضاهای هندسی چندصدبُعدی تبدیل می‌شوند؟ کالبدشکافی لایه‌های توجه (Self-Attention) در ترنسفورمرها.',
+                'artificial-intelligence',
+                generate_cosmos_ai_content,
+                ['ai', 'systems-architecture'],
+                False
+            ),
+            (
+                'یادگیری تقویتی در بازی‌های استراتژیک: از آلفاگو تا هدایت سیستم‌های رباتیک خودمختار',
+                'reinforcement-learning-in-complex-environments',
+                'کاوش در فضاهای تصمیم‌گیری فوق‌العاده بزرگ و همگرایی شبیه‌سازی با دنیای واقعی در آموزش بازوهای مکانیکی و پهپادها.',
+                'artificial-intelligence',
+                generate_cosmos_ai_content,
+                ['ai', 'systems-architecture'],
+                False
+            ),
+            (
+                'تاثیر هوش مصنوعی بر بازار کار و اقتصاد آینده: بازتعریف مهارت‌های انسانی در عصر اتوماسیون',
+                'ai-impact-on-labor-markets-and-human-skills',
+                'کدام مهارت‌ها در برابر اتوماسیون مصون می‌مانند؟ ضرورت آموزش تفکر انتقادی، خردورزی اخلاقی و خلاقیت ساختاریافته.',
+                'artificial-intelligence',
+                generate_cosmos_ai_content,
+                ['ai', 'philosophy'],
+                False
+            ),
+            (
+                'فلسفه ذهن و هوش سیلیکونی: آیا مدل‌های زبانی می‌توانند تجربه ذهنی (Qualia) داشته باشند؟',
+                'philosophy-of-mind-and-silicon-consciousness',
+                'مسئله دشوار آگاهی از دیدگاه دیوید چالمرز؛ بررسی ادعاهای پیرامون ظهور ادراک در شبکه‌های پیچیده محاسباتی.',
+                'artificial-intelligence',
+                generate_cosmos_ai_content,
+                ['ai', 'philosophy'],
+                False
+            ),
+
+            # Category 5: Software Architecture & Systems (10 articles)
+            (
+                'معماری سه‌لایه تمیز (View, Service, Repository): راهنمای جامع عبور از مدل‌های چاق',
+                'clean-three-tier-architecture-guide',
+                'کالبدشکافی تفکیک دغدغه‌ها در وب؛ شیوه ساخت پایگاه‌کدهای ماژولار، تست‌پذیر و مصون از خطاهای تداخل و پیچیدگی.',
+                'software-architecture',
+                generate_architecture_content,
+                ['systems-architecture', 'critical-thinking'],
+                True
+            ),
+            (
+                'توسعه مبتنی بر دامنه (DDD): مدل‌سازی هسته بیزینس و مرزهای احاطه‌شده (Bounded Contexts)',
+                'domain-driven-design-and-bounded-contexts',
+                'زبان مشترک (Ubiquitous Language) میان مهندسان و ذی‌نفعان کسب‌وکار؛ الگوهای Aggregate، Entity و Value Objects.',
+                'software-architecture',
+                generate_architecture_content,
+                ['systems-architecture'],
+                False
+            ),
+            (
+                'مایکروسرویس‌ها در عمل: الگوهای ارتباط ناهمگام، صف پیام‌ها و مدیریت تراکنش‌های توزیع‌شده',
+                'microservices-patterns-and-distributed-transactions',
+                'چالش‌های الگوی Saga، صف‌های رویداد آپاچی کافکا و حفظ یکپارچگی داده‌ها میان سرویس‌های مستقل شبکه.',
+                'software-architecture',
+                generate_architecture_content,
+                ['systems-architecture'],
+                True
+            ),
+            (
+                'استراتژی‌های کشینگ چندسطحی: بهینه‌سازی کوئری‌های دیتابیس و کاهش گلوگاه‌های I/O',
+                'multi-level-caching-strategies-and-io-reduction',
+                'از کش‌های محلی در حافظه تا کلاسترهای توزیع‌شده ردیس؛ سیاست‌های انقضا، Cache Invalidation و پیش‌بارگذاری هوشمند.',
+                'software-architecture',
+                generate_architecture_content,
+                ['systems-architecture'],
+                False
+            ),
+            (
+                'اصول SOLID و طراحی شیءگرا: نوشتن کدهای ماژولار، آزمون‌پذیر و پایدار در درازمدت',
+                'solid-principles-in-production-software',
+                'بررسی پنج اصل حیاتی مهندسی نرم‌افزار با مثال‌های عینی؛ چگونه وابستگی‌ها را معکوس کنیم و سیستم‌های مقیاس‌پذیر بسازیم؟',
+                'software-architecture',
+                generate_architecture_content,
+                ['systems-architecture'],
+                False
+            ),
+            (
+                'مهندسی تاب‌آوری در سیستم‌های مقیاس‌بزرگ: الگوهای Circuit Breaker، Retry و Bulkhead',
+                'resilience-engineering-and-fault-tolerance',
+                'سیستم‌ها شکست خواهند خورد؛ هنر مهندسی در جلوگیری از دومینوی خرابی‌ها و طراحی سامانه‌های خودترمیم است.',
+                'software-architecture',
+                generate_architecture_content,
+                ['systems-architecture'],
+                False
+            ),
+            (
+                'معماری رویدادمحور (Event-Driven Architecture): هدایت سامانه‌ها با استریم‌های لحظه‌ای داده',
+                'event-driven-architecture-and-event-sourcing',
+                'ثبت تاریخچه تغییرات به جای حالت نهایی (Event Sourcing) و تفکیک مسئولیت‌های خواندن و نوشتن (CQRS) در سیستم‌های پرترافیک.',
+                'software-architecture',
+                generate_architecture_content,
+                ['systems-architecture'],
+                False
+            ),
+            (
+                'بهینه‌سازی پایگاه‌های داده رابطه‌ای: ایندکس‌گذاری پیشرفته، پارتیشن‌بندی و نرمال‌سازی عملگرایانه',
+                'relational-database-optimization-and-indexing',
+                'کالبدشکافی پلن اجرای کوئری (EXPLAIN)، بهینه‌سازی B-Treeها و تعادل میان قواعد نرمال‌سازی و سرعت بازخوانی داده.',
+                'software-architecture',
+                generate_architecture_content,
+                ['systems-architecture'],
+                False
+            ),
+            (
+                'پایپ‌لاین‌های CI/CD و زیرساخت به عنوان کد (IaC): خودکارسازی انتشار نرم‌افزار بدون توقف',
+                'cicd-pipelines-and-infrastructure-as-code',
+                'استقرارهای بدون توقف (Zero-downtime Blue/Green Deployments) و مدیریت سرورها با کدهای نسخه‌پذیر و آزمون‌پذیر.',
+                'software-architecture',
+                generate_architecture_content,
+                ['systems-architecture'],
+                False
+            ),
+            (
+                'امنیت در سطح معماری: مدل‌سازی تهدیدات، احراز هویت توزیع‌شده و دفاع در عمق (Defense in Depth)',
+                'security-by-design-and-threat-modeling',
+                'مدل اعتماد صفر (Zero Trust Architecture)، حفاظت از توکن‌های نشست و امن‌سازی لایه‌های ارتباطی میکروسرویس‌ها.',
+                'software-architecture',
+                generate_architecture_content,
+                ['systems-architecture'],
+                False
+            ),
+
+            # Category 6: Product Design & Design Systems (10 articles)
+            (
+                'دیزاین سیستم‌های مقیاس‌پذیر: معماری دیزاین توکن‌ها و هماهنگی میان دیزاینر و برنامه‌نویس',
+                'scalable-design-systems-and-design-tokens',
+                'ایجاد زبان بصری مشترک؛ چگونه دیزاین توکن‌ها فاصله‌ها، پالت رنگ‌ها و تایپوگرافی را در تمام پلتفرم‌ها هماهنگ می‌سازند؟',
+                'design-systems',
+                generate_aesthetics_content,
+                ['design', 'systems-architecture'],
+                True
+            ),
+            (
+                'تایپوگرافی فارسی در وب مدرن: هندسه خط، خوانایی خطوط زمینه و فونت‌های متغیر',
+                'persian-typography-in-modern-web-and-variable-fonts',
+                'از خطوط سنتی تا فونت‌های دیجیتال نظیر وزیرمتن؛ استانداردهای خوانایی در متون بلند، تناسب خطوط و ارگونومی دیداری.',
+                'design-systems',
+                generate_aesthetics_content,
+                ['design', 'aesthetics'],
+                True
+            ),
+            (
+                'موشن دیزاین و فیزیک انیمیشن در وب: راهنمای کاربردی میکرواینتراکشن‌های هدفمند',
+                'motion-design-and-purposeful-micro-interactions',
+                'انیمیشن به مثابه فیزیک جهان مجازی؛ چگونه حرکات نرم و پاسخگو کاربر را در جریان شناخت ساختار صفحه هدایت می‌کنند؟',
+                'design-systems',
+                generate_aesthetics_content,
+                ['design', 'aesthetics'],
+                False
+            ),
+            (
+                'روانشناسی تجربه کاربری (UX): الگوهای رفتاری، قانون هیک، و کاهش بار شناختی مخاطب',
+                'ux-psychology-and-cognitive-load-reduction',
+                'چگونه با حذف اصطکاک‌های غیرضروری و کاهش تعداد گزینه‌ها در هر گام، تجربه کاربری شهودی و لذت‌بخشی خلق نماییم؟',
+                'design-systems',
+                generate_aesthetics_content,
+                ['design', 'cognitive-psychology'],
+                False
+            ),
+            (
+                'دسترس‌پذیری وب (A11y): طراحی فراگیر برای تمام کاربران و استانداردهای WCAG',
+                'web-accessibility-and-inclusive-design',
+                'کنتراست رنگ‌ها، ناوبری با کیبورد، برچسب‌های خواننده صفحه و احترام به تنوع توانمندی‌های انسانی در دنیای دیجیتال.',
+                'design-systems',
+                generate_aesthetics_content,
+                ['design', 'aesthetics'],
+                False
+            ),
+            (
+                'هنر چیدمان و شبکه‌بندی (Grid Systems): تعادل فضاهای منفی و ریتم بصری در صفحات واکنش‌گرا',
+                'grid-systems-negative-space-and-responsive-rhythm',
+                'شبکه‌های ۱۲ ستونه، هماهنگی فضاهای خالی و پیاده‌سازی گرید‌های روان با تیلویند و سی‌اس‌اس مدرن.',
+                'design-systems',
+                generate_aesthetics_content,
+                ['design', 'aesthetics'],
+                False
+            ),
+            (
+                'معماری اطلاعات و طراحی جریان کاربر: هدایت بصری بدون اصطکاک از نقطه فرود تا هدف',
+                'information-architecture-and-frictionless-user-flow',
+                'ساختار درختی محتوا، دسته‌بندی موضوعی و سلسله‌مراتب بصری؛ چگونه کاربر در کسری از ثانیه مسیر خود را پیدا می‌کند؟',
+                'design-systems',
+                generate_aesthetics_content,
+                ['design', 'systems-architecture'],
+                False
+            ),
+            (
+                'تحقیقات کاربردی و تست کارایی محصول: روش‌های کشف نیازهای ناگفته و اعتبارسنجی فرضیات',
+                'user-research-methods-and-usability-testing',
+                'مصاحبه‌های عمقی، آزمون‌های A/B و نقشه‌های حرارتی (Heatmaps)؛ چگونه محصولات را بر اساس داده‌های تجربی بازطراحی کنیم؟',
+                'design-systems',
+                generate_aesthetics_content,
+                ['design', 'critical-thinking'],
+                False
+            ),
+            (
+                'طراحی دارک‌مود و تم‌های چندگانه: هارمونی کنتراست، کاهش خستگی چشم و استانداردهای رنگی',
+                'dark-mode-architecture-and-multi-theme-design',
+                'اصول عمق‌دهی با سطوح خاکستری به جای سیاه مطلق، مدیریت تابش نور در محیط‌های کم‌نور و ذخیره‌سازی ترجیحات کاربر.',
+                'design-systems',
+                generate_aesthetics_content,
+                ['design', 'aesthetics'],
+                False
+            ),
+            (
+                'آینده رابط‌های کاربری (Future UI): از دیزاین لمسی تا تعاملات صوتی و واقعیت فضایی',
+                'future-of-ui-spatial-computing-and-voice',
+                'فراتر از شیشه‌های دو بعدی؛ آمادگی دیزاین سیستم‌ها برای تعاملات سه‌بعدی، حرکات نگاه (Eye Tracking) و رایانش فضایی.',
+                'design-systems',
+                generate_aesthetics_content,
+                ['design', 'ai'],
+                False
             )
         ]
 
-        # Clean and seed
+        self.stdout.write(self.style.NOTICE(f'Total {len(raw_article_meta)} articles prepared across all categories.'))
+
+        # Clear existing articles and recreate
         Article.objects.all().delete()
         created_articles = []
         now = timezone.now()
@@ -631,7 +929,7 @@ class Command(BaseCommand):
                 author=author,
                 status=ArticleStatus.PUBLISHED,
                 reading_time_minutes=15 + (idx % 10),
-                views_count=150 + (idx * 27),
+                views_count=180 + (idx * 23),
                 is_featured=is_feat,
                 published_at=published_date
             )
@@ -641,7 +939,7 @@ class Command(BaseCommand):
             art.tags.set(tag_objs)
             created_articles.append(art)
 
-        self.stdout.write(self.style.SUCCESS(f'Successfully created and indexed {len(created_articles)} articles!'))
+        self.stdout.write(self.style.SUCCESS(f'Successfully created and indexed {len(created_articles)} articles across ALL categories!'))
 
         # 6. Seed Comments
         Comment.objects.all().delete()
@@ -654,7 +952,7 @@ class Command(BaseCommand):
         ]
 
         comment_count = 0
-        for i in range(15):
+        for i in range(25):
             art = created_articles[i]
             author = authors[(i + 1) % len(authors)]
             text = comment_samples[i % len(comment_samples)]
@@ -667,4 +965,4 @@ class Command(BaseCommand):
             comment_count += 1
 
         self.stdout.write(self.style.SUCCESS(f'Seeded {comment_count} realistic approved comments.'))
-        self.stdout.write(self.style.SUCCESS('🎉 Portable Seeder finished: Exactly 50 comprehensive articles with identical photos and categories on any computer!'))
+        self.stdout.write(self.style.SUCCESS('🎉 Every single category now contains at least 10 comprehensive articles!'))
