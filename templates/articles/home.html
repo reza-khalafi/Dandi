@@ -241,15 +241,6 @@
       {% include 'articles/partials/article_list_partial.html' %}
     </div>
 
-    <!-- Loading Spinner Indicator -->
-    <div id="feed-loading-spinner" class="hidden py-10 flex flex-col items-center justify-center gap-3">
-      <div class="w-9 h-9 border-3 border-brand-purple/20 border-t-brand-orange rounded-full animate-spin"></div>
-      <span class="text-xs font-semibold text-text-muted">در حال بارگذاری مقالات بعدی...</span>
-    </div>
-
-    <!-- Scroll Sentinel for Intersection Observer -->
-    <div id="scroll-sentinel" class="w-full h-8 {% if not articles_page.has_next %}hidden{% endif %}"></div>
-
     <!-- ROBUST RESPONSIVE PAGINATION BAR (Supports any number of pages without breaking layout) -->
     {% if articles_page.paginator.num_pages > 1 %}
       <div class="mt-14 pt-8 border-t border-border-color/80 flex flex-col items-center gap-4">
@@ -258,7 +249,7 @@
           
           <!-- Previous Button -->
           {% if articles_page.has_previous %}
-            <a href="?page={{ articles_page.previous_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if search_query %}&q={{ search_query }}{% endif %}" 
+            <a href="?page={{ articles_page.previous_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if search_query %}&q={{ search_query }}{% endif %}#articles-heading-anchor" 
                class="px-3.5 h-10 rounded-xl glass-panel border border-border-color hover:border-brand-purple/50 text-text-primary text-xs font-bold inline-flex items-center gap-1.5 transition duration-200">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
               <span>قبلی</span>
@@ -281,7 +272,7 @@
                 …
               </span>
             {% else %}
-              <a href="?page={{ num }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if search_query %}&q={{ search_query }}{% endif %}" 
+              <a href="?page={{ num }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if search_query %}&q={{ search_query }}{% endif %}#articles-heading-anchor" 
                  class="w-10 h-10 rounded-xl glass-panel border border-border-color hover:border-brand-purple/50 text-text-secondary hover:text-text-primary text-xs font-bold flex items-center justify-center transition duration-200">
                 {{ num }}
               </a>
@@ -290,7 +281,7 @@
 
           <!-- Next Button -->
           {% if articles_page.has_next %}
-            <a href="?page={{ articles_page.next_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if search_query %}&q={{ search_query }}{% endif %}" 
+            <a href="?page={{ articles_page.next_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if search_query %}&q={{ search_query }}{% endif %}#articles-heading-anchor" 
                class="px-3.5 h-10 rounded-xl glass-panel border border-border-color hover:border-brand-purple/50 text-text-primary text-xs font-bold inline-flex items-center gap-1.5 transition duration-200">
               <span>بعدی</span>
               <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>

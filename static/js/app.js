@@ -215,85 +215,26 @@ function initCard3DTilt() {
 }
 
 /* ----------------------------------------------------
-   3. Incremental Article Loading & Live Search
+   3. Live Search & Page Navigation Controller
    ---------------------------------------------------- */
 function initArticleFeedManager() {
   const feedContainer = document.getElementById('articles-feed-container');
-  const sentinel = document.getElementById('scroll-sentinel');
-  const spinner = document.getElementById('feed-loading-spinner');
-  const loadMoreBtn = document.getElementById('manual-load-more-btn');
   const searchInput = document.getElementById('live-search-input');
   const heroSearchInput = document.getElementById('hero-search-input');
   const resultCountBadge = document.getElementById('result-count-badge');
+  const articlesAnchor = document.getElementById('articles-heading-anchor');
 
   if (!feedContainer) return;
 
-  let currentPage = 1;
-  let hasNextPage = feedContainer.getAttribute('data-has-next') === 'true';
-  let isLoading = false;
   let currentCategory = feedContainer.getAttribute('data-category') || '';
   let currentQuery = feedContainer.getAttribute('data-query') || '';
-
-  // Setup Intersection Observer for dynamic scroll loading
-  if (sentinel && 'IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && hasNextPage && !isLoading) {
-          loadMoreArticles();
-        }
-      });
-    }, { rootMargin: '250px' });
-
-    observer.observe(sentinel);
-  }
-
-  if (loadMoreBtn) {
-    loadMoreBtn.addEventListener('click', () => {
-      if (hasNextPage && !isLoading) {
-        loadMoreArticles();
-      }
-    });
-  }
-
-  function loadMoreArticles() {
-    if (isLoading || !hasNextPage) return;
-    isLoading = true;
-    showLoading(true);
-
-    const nextPage = currentPage + 1;
-    const url = `/articles/api/feed/?page=${nextPage}&q=${encodeURIComponent(currentQuery)}&category=${encodeURIComponent(currentCategory)}`;
-
-    fetch(url, {
-      headers: { 'X-Requested-With': 'XMLHttpRequest' }
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.html) {
-          // Append new cards inside feedContainer
-          const tempDiv = document.createElement('div');
-          tempDiv.innerHTML = data.html;
-          while (tempDiv.firstChild) {
-            feedContainer.appendChild(tempDiv.firstChild);
-          }
-          initCard3DTilt();
-        }
-        currentPage = data.current_page;
-        hasNextPage = data.has_next;
-        updateSentinelVisibility();
-      })
-      .catch((err) => console.error('Error loading more articles:', err))
-      .finally(() => {
-        isLoading = false;
-        showLoading(false);
-      });
-  }
+  let isLoading = false;
 
   // Live search debouncing & visual feedback elements
   const searchFeedback = document.getElementById('live-search-feedback');
   const searchFeedbackText = document.getElementById('search-feedback-text');
   const searchFeedbackIcon = document.getElementById('search-feedback-icon');
   const searchScrollBtn = document.getElementById('search-scroll-to-results-btn');
-  const articlesAnchor = document.getElementById('articles-heading-anchor');
 
   let searchTimeout = null;
   function handleSearchInput(value, shouldScroll = false) {
@@ -311,7 +252,6 @@ function initArticleFeedManager() {
     }
 
     searchTimeout = setTimeout(() => {
-      currentPage = 1;
       executeSearch(shouldScroll);
     }, 280);
   }
@@ -326,9 +266,9 @@ function initArticleFeedManager() {
     }
   }
 
-  // Auto-scroll to articles feed when category is filtered or anchor is targeted
+  // Auto-scroll to articles feed when page, category, or anchor is targeted
   const currentUrlParams = new URLSearchParams(window.location.search);
-  if (currentUrlParams.has('category') || window.location.hash === '#articles-heading-anchor') {
+  if (currentUrlParams.has('page') || currentUrlParams.has('category') || window.location.hash === '#articles-heading-anchor') {
     setTimeout(() => {
       scrollToResults();
     }, 180);
@@ -362,7 +302,6 @@ function initArticleFeedManager() {
 
   function executeSearch(autoScroll = false) {
     isLoading = true;
-    showLoading(true);
 
     const url = `/articles/api/feed/?page=1&q=${encodeURIComponent(currentQuery)}&category=${encodeURIComponent(currentCategory)}`;
 
@@ -381,12 +320,9 @@ function initArticleFeedManager() {
           </div>
         `;
         initCard3DTilt();
-        currentPage = 1;
-        hasNextPage = data.has_next;
         if (resultCountBadge) {
           resultCountBadge.textContent = `${data.total_count} مقاله موجود`;
         }
-        updateSentinelVisibility();
 
         // Update Search Feedback Banner
         if (searchFeedback) {
@@ -406,7 +342,6 @@ function initArticleFeedManager() {
                   <svg class="w-3.5 h-3.5 rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                 `;
               }
-              // If user pressed enter, or if autoScroll requested, scroll smoothly
               if (autoScroll) {
                 scrollToResults();
               }
@@ -426,21 +361,10 @@ function initArticleFeedManager() {
           }
         }
       })
-      .catch((err) => console.error('Search error:', err))
+      .catch((err) => console.error('Error executing live search:', err))
       .finally(() => {
         isLoading = false;
-        showLoading(false);
       });
-  }
-
-  function showLoading(show) {
-    if (spinner) spinner.classList.toggle('hidden', !show);
-    if (loadMoreBtn) loadMoreBtn.classList.toggle('opacity-50', show);
-  }
-
-  function updateSentinelVisibility() {
-    if (sentinel) sentinel.classList.toggle('hidden', !hasNextPage);
-    if (loadMoreBtn) loadMoreBtn.classList.toggle('hidden', !hasNextPage);
   }
 }
 
