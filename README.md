@@ -97,54 +97,60 @@
 
 ---
 
-## 🚀 راهنمای راه‌اندازی سریع (Quick Start)
+## 💻 راهنمای راه‌اندازی و اجرای محلی بر اساس سیستم‌عامل
 
-### ۱. پیش‌نیازها
-- Python 3.11+
-- Pip و ابزار Virtualenv
+برای مشاهده راهنمای دقیق و دستورات گام‌به‌گام متناسب با سیستم‌عامل خود، روی پیوند مربوطه کلیک کنید:
 
-### ۲. ایجاد محیط مجازی و نصب وابستگی‌ها
+- 🐧 **[راهنمای اجرای محلی روی گنو/لینوکس (Linux Setup Guide)](docs/RUN_LINUX.md)**: پوشش کامل توزیع‌های Ubuntu، Debian، Fedora و Arch.
+- 🍎 **[راهنمای اجرای محلی روی مک‌اواس (macOS Setup Guide)](docs/RUN_MACOS.md)**: پشتیبانی پردازنده‌های Apple Silicon (M1..M4) و Intel.
+- 🪟 **[راهنمای اجرای محلی روی ویندوز (Windows Setup Guide)](docs/RUN_WINDOWS.md)**: دستورات کامل PowerShell، CMD و Git Bash.
+
+---
+
+## 🚀 خلاصه راه‌اندازی سریع (Quick Start)
+
+### ۱. دریافت مخزن و ساخت محیط مجازی
 ```bash
-# رفتن به پوشه پروژه
-cd /Users/rezakhalafi/Sites/dandi
+git clone https://github.com/reza-khalafi/Dandi.git
+cd Dandi
 
-# ایجاد و فعال‌سازی محیط مجازی
 python3 -m venv .venv
-source .venv/bin/activate
-
-# نصب پکیج‌ها
-pip install -r requirements.txt
+source .venv/bin/activate  # در ویندوز: .\.venv\Scripts\Activate.ps1
 ```
 
-### ۳. اجرای مایگریشن‌ها
+### ۲. نصب بسته‌ها و کپی متغیرهای محیطی
+```bash
+pip install --upgrade pip
+pip install -r requirements.txt
+
+cp .env.example .env       # در ویندوز CMD: copy .env.example .env
+```
+
+### ۳. ایجاد دیتابیس لوکال و داده‌های اولیه
 ```bash
 python manage.py migrate
-```
-
-### ۴. بارگذاری داده‌های اولیه (۵۰ مقاله با عکس واقعی)
-```bash
 python manage.py seed_data
 ```
-*این دستور موارد زیر را ایجاد می‌کند:*
-- کاربر مدیر: نام کاربری `admin` / رمز عبور `admin123456`
-- کاربر دمو: نام کاربری `danial` / رمز عبور `dandi123456`
-- ۳ قلمرو محتوایی و تگ‌های تخصصی
-- ۵۰ مقاله تفصیلی جامع (هرکدام بالای ۳۰۰۰ کلمه با تصاویر عکاسی)
-- دیدگاه‌های نمونه تایید شده
+*اطلاعات حساب مدیر پیش‌فرض ساخته‌شده:*
+- نام کاربری: `admin` | رمز عبور: `admin123456`
 
-### ۵. اجرای سرور توسعه
+### ۴. اجرای سرور توسعه
 ```bash
 python manage.py runserver
 ```
-اکنون می‌توانید سایت را در آدرس [http://127.0.0.1:8000](http://127.0.0.1:8000) مشاهده نمایید.
+سایت در آدرس [http://127.0.0.1:8000](http://127.0.0.1:8000) و دستیار هوشمند در [http://127.0.0.1:8000/assistant/](http://127.0.0.1:8000/assistant/) در دسترس است.
 
 ---
 
 ## 🧪 اجرای آزمون‌ها (Running Tests)
 
-پروژه دارای ۳۱ آزمون کامل در لایه‌های مدل، ریپازیتوری، سرویس و نما می‌باشد:
+پروژه دارای **۸۳ آزمون خودکار** شامل ۱۴ متدولوژی تست مهندسی نرم‌افزار است:
 
 ```bash
+# اجرای کل تست‌های متدولوژی‌های ۱۴گانه
+python manage.py test tests
+
+# اجرای آزمون‌های داخلی ماژول‌های برنامه
 python manage.py test apps
 ```
 
