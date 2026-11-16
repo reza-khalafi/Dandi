@@ -110,47 +110,77 @@
   </div>
 </section>
 
-<!-- COMPACT CATEGORY STRIP (Low Height, High Efficiency) -->
+<!-- CATEGORY STRIP (Two-Row Grid with Interactive Tooltips & Full Persian Titles) -->
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20">
-  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-2.5 sm:gap-3">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-3.5">
     
     <!-- Option 0: All Categories Card -->
-    <a href="{% url 'articles:home' %}{% if search_query %}?q={{ search_query }}{% endif %}" 
-       class="group rounded-2xl p-[1px] transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5 block
+    <a href="{% url 'articles:home' %}{% if search_query %}?q={{ search_query }}{% endif %}#articles-heading-anchor" 
+       title="مشاهده همه مقالات دَندی • شامل {{ total_count }} مقاله"
+       class="group relative rounded-2xl p-[1px] transition-all duration-200 shadow-md hover:shadow-xl hover:-translate-y-0.5 block
        {% if not selected_category %}bg-gradient-to-r from-brand-orange to-brand-purple ring-2 ring-brand-purple/40{% else %}bg-gradient-to-b from-border-color to-transparent hover:from-brand-purple/40{% endif %}">
-      <div class="rounded-[15px] p-2.5 sm:p-3 flex items-center justify-between gap-2 {% if not selected_category %}bg-gradient-to-r from-brand-orange to-brand-purple text-white{% else %}bg-card-bg text-text-primary{% endif %}">
-        <div class="flex items-center gap-2 min-w-0">
-          <div class="w-6 h-6 rounded-lg flex items-center justify-center shrink-0 {% if not selected_category %}bg-white/20 text-white{% else %}bg-brand-purple/10 text-brand-purple{% endif %}">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path></svg>
-          </div>
-          <span class="text-xs font-black truncate">همه قلمروها</span>
+      
+      <!-- Floating Glassmorphic Tooltip -->
+      <div class="absolute bottom-full mb-2.5 left-1/2 -translate-x-1/2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none z-30 whitespace-nowrap shadow-2xl">
+        <div class="px-3.5 py-1.5 rounded-xl bg-slate-900/95 text-white text-[11px] font-bold backdrop-blur-md border border-white/15 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-brand-purple"></span>
+          <span>مشاهده کلیه مقالات مجله دَندی</span>
+          <span class="text-brand-orange">({{ total_count }} مقاله)</span>
         </div>
-        <span class="px-2 py-0.5 rounded-md text-[10px] font-black shrink-0 {% if not selected_category %}bg-black/20 text-white{% else %}bg-bg-secondary text-text-muted{% endif %}">
+        <div class="w-2 h-2 bg-slate-900/95 rotate-45 mx-auto -mt-1 border-r border-b border-white/15"></div>
+      </div>
+
+      <div class="rounded-[15px] p-3 flex items-center justify-between gap-3 {% if not selected_category %}bg-gradient-to-r from-brand-orange to-brand-purple text-white{% else %}bg-card-bg text-text-primary{% endif %}">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {% if not selected_category %}bg-white/20 text-white{% else %}bg-brand-purple/10 text-brand-purple{% endif %}">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path></svg>
+          </div>
+          <span class="text-xs sm:text-sm font-black whitespace-normal leading-tight">همه قلمروها</span>
+        </div>
+        <span class="px-2.5 py-0.5 rounded-lg text-xs font-black shrink-0 {% if not selected_category %}bg-black/20 text-white{% else %}bg-bg-secondary text-text-muted{% endif %}">
           {{ total_count }}
         </span>
       </div>
     </a>
 
-    <!-- Compact Category Badges -->
+    <!-- Category Badges (Spread in 2 rows for full text visibility & elegant layout) -->
     {% for category in categories %}
-      <a href="{% url 'articles:home' %}?category={{ category.slug }}{% if search_query %}&q={{ search_query }}{% endif %}" 
-         class="group rounded-2xl p-[1px] transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5 block
+      <a href="{% url 'articles:home' %}?category={{ category.slug }}{% if search_query %}&q={{ search_query }}{% endif %}#articles-heading-anchor" 
+         title="{{ category.name }} • شامل {{ category.published_articles_count }} مقاله{% if category.description %} — {{ category.description }}{% endif %}"
+         class="group relative rounded-2xl p-[1px] transition-all duration-200 shadow-md hover:shadow-xl hover:-translate-y-0.5 block
          {% if selected_category == category.slug %}bg-gradient-to-r from-brand-orange to-brand-purple ring-2 ring-brand-purple/40{% else %}bg-gradient-to-b from-border-color to-transparent hover:from-brand-purple/40{% endif %}">
-        <div class="rounded-[15px] p-2.5 sm:p-3 flex items-center justify-between gap-2 {% if selected_category == category.slug %}bg-gradient-to-r from-brand-orange to-brand-purple text-white{% else %}bg-card-bg text-text-primary{% endif %}">
-          <div class="flex items-center gap-2 min-w-0">
-            <div class="w-6 h-6 rounded-lg flex items-center justify-center shrink-0
-              {% if selected_category == category.slug %}bg-white/20 text-white
-              {% elif forloop.counter == 1 %}bg-orange-500/10 text-orange-500
-              {% elif forloop.counter == 2 %}bg-violet-500/10 text-violet-500
-              {% elif forloop.counter == 3 %}bg-amber-500/10 text-amber-500
-              {% elif forloop.counter == 4 %}bg-indigo-500/10 text-indigo-500
-              {% elif forloop.counter == 5 %}bg-rose-500/10 text-rose-500
-              {% else %}bg-emerald-500/10 text-emerald-500{% endif %}">
-              <span class="text-xs">•</span>
-            </div>
-            <span class="text-xs font-black truncate" title="{{ category.name }}">{{ category.name }}</span>
+        
+        <!-- Floating Glassmorphic Tooltip -->
+        <div class="absolute bottom-full mb-2.5 left-1/2 -translate-x-1/2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none z-30 whitespace-nowrap shadow-2xl">
+          <div class="px-3.5 py-1.5 rounded-xl bg-slate-900/95 text-white text-[11px] font-bold backdrop-blur-md border border-white/15 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full 
+              {% if forloop.counter == 1 %}bg-orange-400
+              {% elif forloop.counter == 2 %}bg-violet-400
+              {% elif forloop.counter == 3 %}bg-amber-400
+              {% elif forloop.counter == 4 %}bg-indigo-400
+              {% elif forloop.counter == 5 %}bg-rose-400
+              {% else %}bg-emerald-400{% endif %}"></span>
+            <span>{{ category.name }}</span>
+            <span class="text-white/70">({{ category.published_articles_count }} مقاله)</span>
           </div>
-          <span class="px-2 py-0.5 rounded-md text-[10px] font-black shrink-0 {% if selected_category == category.slug %}bg-black/20 text-white{% else %}bg-bg-secondary text-text-muted{% endif %}">
+          <div class="w-2 h-2 bg-slate-900/95 rotate-45 mx-auto -mt-1 border-r border-b border-white/15"></div>
+        </div>
+
+        <div class="rounded-[15px] p-3 flex items-center justify-between gap-3 {% if selected_category == category.slug %}bg-gradient-to-r from-brand-orange to-brand-purple text-white{% else %}bg-card-bg text-text-primary{% endif %}">
+          <div class="flex items-center gap-2.5 min-w-0">
+            <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0
+              {% if selected_category == category.slug %}bg-white/20 text-white
+              {% elif forloop.counter == 1 %}bg-orange-500/15 text-orange-500
+              {% elif forloop.counter == 2 %}bg-violet-500/15 text-violet-500
+              {% elif forloop.counter == 3 %}bg-amber-500/15 text-amber-500
+              {% elif forloop.counter == 4 %}bg-indigo-500/15 text-indigo-500
+              {% elif forloop.counter == 5 %}bg-rose-500/15 text-rose-500
+              {% else %}bg-emerald-500/15 text-emerald-500{% endif %}">
+              <span class="text-base font-black">•</span>
+            </div>
+            <span class="text-xs sm:text-sm font-black whitespace-normal leading-tight">{{ category.name }}</span>
+          </div>
+          <span class="px-2.5 py-0.5 rounded-lg text-xs font-black shrink-0 {% if selected_category == category.slug %}bg-black/20 text-white{% else %}bg-bg-secondary text-text-muted{% endif %}">
             {{ category.published_articles_count }}
           </span>
         </div>
@@ -185,12 +215,12 @@
   <div>
     <div
       id="articles-heading-anchor"
-      class="flex items-center justify-between mb-8 pb-4 border-b border-border-color transition-all duration-500 scroll-mt-24"
+      class="flex items-center justify-between mb-8 pb-4 border-b border-border-color transition-all duration-500 scroll-mt-28"
     >
       <h2 class="text-xl sm:text-2xl font-black text-text-primary flex items-center gap-3">
         <span class="w-2.5 h-7 rounded-full bg-gradient-to-b from-brand-orange to-brand-purple"></span>
-        <span>
-          {% if selected_category %}مقالات قلمرو «{{ selected_category }}»
+        <span id="articles-feed-heading-title">
+          {% if selected_category_name %}مقالات قلمرو «{{ selected_category_name }}»
           {% elif search_query %}نتایج جستجو برای: «{{ search_query }}»
           {% else %}تازه‌ترین جستارها و مقالات دَندی{% endif %}
         </span>

@@ -39,12 +39,25 @@ class HomeView(View):
         except Exception:
             elided_page_range = paginator.page_range
 
+        selected_category_name = None
+        if category_slug:
+            matched_category = next((c for c in categories if c.slug == category_slug), None)
+            if not matched_category:
+                from apps.articles.repositories.category_repository import CategoryRepository
+                matched_category = CategoryRepository().get_by_slug(category_slug)
+
+            if matched_category:
+                selected_category_name = matched_category.name
+            else:
+                selected_category_name = category_slug
+
         context = {
             'categories': categories,
             'articles_page': articles_page,
             'elided_page_range': elided_page_range,
             'featured_articles': featured_articles,
             'selected_category': category_slug,
+            'selected_category_name': selected_category_name,
             'search_query': query,
             'total_count': total_count,
         }

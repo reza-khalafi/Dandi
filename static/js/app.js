@@ -212,6 +212,14 @@ function initArticleFeedManager() {
     }
   }
 
+  // Auto-scroll to articles feed when category is filtered or anchor is targeted
+  const currentUrlParams = new URLSearchParams(window.location.search);
+  if (currentUrlParams.has('category') || window.location.hash === '#articles-heading-anchor') {
+    setTimeout(() => {
+      scrollToResults();
+    }, 180);
+  }
+
   if (searchScrollBtn) {
     searchScrollBtn.addEventListener('click', () => scrollToResults());
   }
