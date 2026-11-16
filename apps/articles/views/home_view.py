@@ -25,13 +25,24 @@ class HomeView(View):
             query=query,
             category_slug=category_slug,
             page=page,
-            per_page=6
+            per_page=20
         )
         featured_articles = self.article_service.get_featured_articles(limit=3)
+
+        paginator = articles_page.paginator
+        try:
+            elided_page_range = paginator.get_elided_page_range(
+                number=articles_page.number,
+                on_each_side=2,
+                on_ends=1
+            )
+        except Exception:
+            elided_page_range = paginator.page_range
 
         context = {
             'categories': categories,
             'articles_page': articles_page,
+            'elided_page_range': elided_page_range,
             'featured_articles': featured_articles,
             'selected_category': category_slug,
             'search_query': query,
