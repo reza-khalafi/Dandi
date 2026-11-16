@@ -115,7 +115,7 @@
     <!-- Option 0: All Categories Card -->
     <a href="{% url 'articles:home' %}{% if search_query %}?q={{ search_query }}{% endif %}#articles-heading-anchor" 
        title="مشاهده همه مقالات دَندی • شامل {{ total_count }} مقاله"
-       class="group relative rounded-2xl p-[1px] transition-all duration-200 shadow-md hover:shadow-xl hover:-translate-y-0.5 block
+       class="group relative rounded-2xl p-[1px] transition-all duration-200 shadow-md hover:shadow-xl hover:-translate-y-0.5 flex flex-col h-full
        {% if not selected_category %}bg-gradient-to-r from-brand-orange to-brand-purple ring-2 ring-brand-purple/40{% else %}bg-gradient-to-b from-border-color to-transparent hover:from-brand-purple/40{% endif %}">
       
       <!-- Floating Glassmorphic Tooltip -->
@@ -128,12 +128,12 @@
         <div class="w-2 h-2 bg-slate-900/95 rotate-45 mx-auto -mt-1 border-r border-b border-white/15"></div>
       </div>
 
-      <div class="rounded-[15px] p-3 flex items-center justify-between gap-3 {% if not selected_category %}bg-gradient-to-r from-brand-orange to-brand-purple text-white{% else %}bg-card-bg text-text-primary{% endif %}">
+      <div class="rounded-[15px] px-3.5 py-3 flex items-center justify-between gap-3 h-full min-h-[64px] {% if not selected_category %}bg-gradient-to-r from-brand-orange to-brand-purple text-white{% else %}bg-card-bg text-text-primary{% endif %}">
         <div class="flex items-center gap-2.5 min-w-0">
           <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {% if not selected_category %}bg-white/20 text-white{% else %}bg-brand-purple/10 text-brand-purple{% endif %}">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path></svg>
           </div>
-          <span class="text-xs sm:text-sm font-black whitespace-normal leading-tight">همه قلمروها</span>
+          <span class="text-xs sm:text-sm font-black leading-snug line-clamp-2">همه قلمروها</span>
         </div>
         <span class="px-2.5 py-0.5 rounded-lg text-xs font-black shrink-0 {% if not selected_category %}bg-black/20 text-white{% else %}bg-bg-secondary text-text-muted{% endif %}">
           {{ total_count }}
@@ -145,7 +145,7 @@
     {% for category in categories %}
       <a href="{% url 'articles:home' %}?category={{ category.slug }}{% if search_query %}&q={{ search_query }}{% endif %}#articles-heading-anchor" 
          title="{{ category.name }} • شامل {{ category.published_articles_count }} مقاله{% if category.description %} — {{ category.description }}{% endif %}"
-         class="group relative rounded-2xl p-[1px] transition-all duration-200 shadow-md hover:shadow-xl hover:-translate-y-0.5 block
+         class="group relative rounded-2xl p-[1px] transition-all duration-200 shadow-md hover:shadow-xl hover:-translate-y-0.5 flex flex-col h-full
          {% if selected_category == category.slug %}bg-gradient-to-r from-brand-orange to-brand-purple ring-2 ring-brand-purple/40{% else %}bg-gradient-to-b from-border-color to-transparent hover:from-brand-purple/40{% endif %}">
         
         <!-- Floating Glassmorphic Tooltip -->
@@ -164,7 +164,7 @@
           <div class="w-2 h-2 bg-slate-900/95 rotate-45 mx-auto -mt-1 border-r border-b border-white/15"></div>
         </div>
 
-        <div class="rounded-[15px] p-3 flex items-center justify-between gap-3 {% if selected_category == category.slug %}bg-gradient-to-r from-brand-orange to-brand-purple text-white{% else %}bg-card-bg text-text-primary{% endif %}">
+        <div class="rounded-[15px] px-3.5 py-3 flex items-center justify-between gap-3 h-full min-h-[64px] {% if selected_category == category.slug %}bg-gradient-to-r from-brand-orange to-brand-purple text-white{% else %}bg-card-bg text-text-primary{% endif %}">
           <div class="flex items-center gap-2.5 min-w-0">
             <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0
               {% if selected_category == category.slug %}bg-white/20 text-white
@@ -176,7 +176,7 @@
               {% else %}bg-emerald-500/15 text-emerald-500{% endif %}">
               <span class="text-base font-black">•</span>
             </div>
-            <span class="text-xs sm:text-sm font-black whitespace-normal leading-tight">{{ category.name }}</span>
+            <span class="text-xs sm:text-sm font-black leading-snug line-clamp-2">{{ category.name }}</span>
           </div>
           <span class="px-2.5 py-0.5 rounded-lg text-xs font-black shrink-0 {% if selected_category == category.slug %}bg-black/20 text-white{% else %}bg-bg-secondary text-text-muted{% endif %}">
             {{ category.published_articles_count }}
