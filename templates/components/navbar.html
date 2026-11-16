@@ -46,6 +46,16 @@
         {% if user.is_authenticated %}
           <!-- Authenticated User Menu -->
           <div class="flex items-center gap-2.5">
+            <!-- Dandi AI Assistant Link -->
+            <a href="{% url 'assistant:chat' %}" 
+               class="px-3 py-2 text-xs font-bold rounded-xl bg-gradient-to-r from-brand-orange/15 to-brand-purple/15 text-brand-purple hover:from-brand-orange/25 hover:to-brand-purple/25 border border-brand-purple/25 transition duration-200 flex items-center gap-1.5 shadow-sm"
+               title="دستیار هوشمند دَندی">
+              <svg class="w-4 h-4 text-brand-orange animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              <span class="hidden md:inline">دستیار هوشمند</span>
+            </a>
+
             <div class="hidden sm:flex flex-col text-left">
               <span class="text-xs font-bold text-text-primary">{{ user.username }}</span>
               <span class="text-[10px] text-emerald-500 font-semibold">عضو فعال</span>

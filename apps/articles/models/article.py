@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.urls import reverse
 from apps.core.models.base_model import TimeStampedModel
 from apps.articles.enums.article_status import ArticleStatus
 from apps.articles.models.category import Category
@@ -75,3 +76,6 @@ class Article(TimeStampedModel):
 
     def __str__(self) -> str:
         return self.title
+
+    def get_absolute_url(self) -> str:
+        return reverse('articles:detail', kwargs={'slug': self.slug})
