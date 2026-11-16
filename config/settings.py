@@ -106,6 +106,14 @@ SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_AGE = 1209600  # 2 weeks
 CSRF_COOKIE_HTTPONLY = False
 
+# CSRF Trusted Origins for public tunnels (ngrok, trycloudflare, loca.lt) and local development
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip() for origin in os.environ.get(
+        'DJANGO_CSRF_TRUSTED_ORIGINS',
+        'https://*.ngrok-free.app,https://*.ngrok.app,https://*.ngrok.io,https://*.trycloudflare.com,https://*.loca.lt,http://127.0.0.1:8000,http://localhost:8000'
+    ).split(',') if origin.strip()
+]
+
 # Production-only SSL & Strict Transport Security settings
 if not DEBUG:
     SECURE_SSL_REDIRECT = True
