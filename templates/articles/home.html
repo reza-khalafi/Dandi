@@ -202,7 +202,7 @@
       </span>
     </div>
 
-    <!-- The Feed Container (Dynamically updated via Infinite Scroll & Live Search - 20 items per page) -->
+    <!-- The Feed Container (Dynamically updated via Infinite Scroll & Live Search - 10 items per page) -->
     <div 
       id="articles-feed-container" 
       class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7"
@@ -210,8 +210,7 @@
       data-category="{{ selected_category|default:'' }}"
       data-query="{{ search_query|default:'' }}"
     >
-      {% include 'articles/partials/article_list_partial.html' with
-      articles=articles_page.object_list %}
+      {% include 'articles/partials/article_list_partial.html' with articles=articles_page.object_list %}
     </div>
 
     <!-- Loading Spinner Indicator -->
@@ -279,7 +278,7 @@
 
         <!-- Informative status footnote -->
         <p class="text-[11px] text-text-muted font-medium">
-          نمایش ۲۰ مقاله در هر صفحه • صفحه {{ articles_page.number }} از {{ articles_page.paginator.num_pages }} (مجموعاً {{ total_count }} مقاله)
+          نمایش ۱۰ مقاله در هر صفحه • صفحه {{ articles_page.number }} از {{ articles_page.paginator.num_pages }} (مجموعاً {{ total_count }} مقاله)
         </p>
 
       </div>

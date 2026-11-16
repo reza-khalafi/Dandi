@@ -7,7 +7,7 @@ from apps.articles.services.article_service import ArticleService
 class ArticleSearchView(View):
     """
     API endpoint powering infinite scroll and asynchronous live article search.
-    Returns rendered HTML snippets and pagination state with 20 items per page.
+    Returns rendered HTML snippets and pagination state with 10 items per page.
     """
 
     def __init__(self, **kwargs):
@@ -28,7 +28,7 @@ class ArticleSearchView(View):
             query=query,
             category_slug=category_slug,
             page=page,
-            per_page=20
+            per_page=10
         )
 
         rendered_html = render_to_string(
