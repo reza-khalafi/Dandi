@@ -1,7 +1,7 @@
 {% load static %}
 <footer class="mt-24 border-t border-border-color bg-bg-secondary/80 backdrop-blur-md">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
       
       <!-- Brand & Standalone Logo -->
       <div class="space-y-4 md:col-span-2">
@@ -22,7 +22,7 @@
         </p>
 
         <div class="flex items-center gap-3 pt-2 text-xs text-text-muted">
-          <span>طراحی شده با Django 6 و Tailwind CSS</span>
+          <span>روایت‌های ژرف و تفکر نقادانه</span>
           <span>•</span>
           <span>فونت یکپارچه وزیرمتن</span>
         </div>
@@ -36,29 +36,6 @@
           <li><a href="{% url 'accounts:register' %}" class="hover:text-brand-orange transition">عضویت در دَندی</a></li>
           <li><a href="{% url 'accounts:login' %}" class="hover:text-brand-orange transition">ورود کاربران</a></li>
         </ul>
-      </div>
-
-      <!-- Architecture & System Highlights -->
-      <div class="space-y-3">
-        <h4 class="text-xs font-bold uppercase tracking-wider text-text-primary">معماری و استاندارد</h4>
-        <div class="p-4 rounded-2xl glass-panel text-[11px] text-text-secondary space-y-2 border border-border-color">
-          <div class="flex items-center justify-between">
-            <span>الگوی مهندسی:</span>
-            <span class="font-bold text-brand-purple">View-Service-Repo</span>
-          </div>
-          <div class="flex items-center justify-between">
-            <span>لود مقالات:</span>
-            <span class="font-bold text-brand-orange">Infinite Lazy Scroll</span>
-          </div>
-          <div class="flex items-center justify-between">
-            <span>سامانه تم:</span>
-            <span class="font-bold text-emerald-500">۴ تم تطبیقی</span>
-          </div>
-          <div class="flex items-center justify-between">
-            <span>حجم مقالات:</span>
-            <span class="font-bold text-indigo-400">بیش از ۳۰۰۰ کلمه</span>
-          </div>
-        </div>
       </div>
 
     </div>
