@@ -144,6 +144,19 @@ body {
   animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Smooth Parallax Optimizations */
+.parallax-smooth {
+  will-change: transform;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.article-tilt-card {
+  transition: transform 0.15s ease-out, box-shadow 0.25s ease-out;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

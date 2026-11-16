@@ -63,42 +63,155 @@ function initThemeManager() {
 }
 
 /* ----------------------------------------------------
-   2. Parallax Motion & Floating Elements
+   2. Comprehensive Parallax Motion & Depth Engine
    ---------------------------------------------------- */
 function initParallaxEffects() {
   const heroSection = document.getElementById('hero-section');
+  const heroCard = document.getElementById('hero-card-container');
+  const heroBg = document.getElementById('hero-parallax-bg');
+  const heroContent = document.getElementById('hero-parallax-content');
   const parallaxOrbs = document.querySelectorAll('.parallax-orb');
   const dandelionSeeds = document.querySelectorAll('.floating-seed');
 
-  // Mouse move parallax on Hero
+  // Skip animations if user prefers reduced motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return;
+  }
+
+  let mouseX = 0;
+  let mouseY = 0;
+  let targetMouseX = 0;
+  let targetMouseY = 0;
+  let scrollY = window.pageYOffset || document.documentElement.scrollTop;
+  let targetScrollY = scrollY;
+  let isTicking = false;
+
+  // Track scroll position with passive listener
+  window.addEventListener('scroll', () => {
+    targetScrollY = window.pageYOffset || document.documentElement.scrollTop;
+    requestTick();
+  }, { passive: true });
+
+  // Mouse move parallax on Hero Section
   if (heroSection && window.innerWidth > 768) {
     heroSection.addEventListener('mousemove', (e) => {
       const rect = heroSection.getBoundingClientRect();
-      const xRatio = (e.clientX - rect.left) / rect.width - 0.5;
-      const yRatio = (e.clientY - rect.top) / rect.height - 0.5;
+      targetMouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 2; // Range: -1 to 1
+      targetMouseY = ((e.clientY - rect.top) / rect.height - 0.5) * 2; // Range: -1 to 1
+      requestTick();
+    });
 
-      parallaxOrbs.forEach((orb) => {
-        const factor = parseFloat(orb.getAttribute('data-parallax-factor') || '20');
-        orb.style.transform = `translate3d(${xRatio * factor}px, ${yRatio * factor}px, 0)`;
-      });
-
-      dandelionSeeds.forEach((seed) => {
-        const factor = parseFloat(seed.getAttribute('data-parallax-factor') || '35');
-        seed.style.transform = `translate3d(${xRatio * factor}px, ${yRatio * factor}px, 0) rotate(${xRatio * 15}deg)`;
-      });
+    heroSection.addEventListener('mouseleave', () => {
+      targetMouseX = 0;
+      targetMouseY = 0;
+      requestTick();
     });
   }
 
-  // Smooth Scroll parallax
-  window.addEventListener('scroll', () => {
-    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-    if (scrollY < 800) {
+  function requestTick() {
+    if (!isTicking) {
+      requestAnimationFrame(updateParallax);
+      isTicking = true;
+    }
+  }
+
+  function updateParallax() {
+    // Smooth lerp interpolation for natural, fluid motion
+    mouseX += (targetMouseX - mouseX) * 0.08;
+    mouseY += (targetMouseY - mouseY) * 0.08;
+    scrollY += (targetScrollY - scrollY) * 0.15;
+
+    // 1. Hero Background Scroll + Subtle Counter Mouse Parallax
+    if (heroBg && scrollY < 1200) {
+      const bgScrollOffset = scrollY * 0.35; // moves down at 0.35x speed as user scrolls
+      const bgMouseX = mouseX * -12;
+      const bgMouseY = mouseY * -12;
+      heroBg.style.transform = `translate3d(${bgMouseX}px, ${bgScrollOffset + bgMouseY}px, 0) scale(1.08)`;
+    }
+
+    // 2. Hero Content Float Parallax (Separates foreground typography from image)
+    if (heroContent && scrollY < 1200) {
+      const contentScrollOffset = scrollY * 0.12;
+      const contentMouseX = mouseX * 8;
+      const contentMouseY = mouseY * 6;
+      const opacity = Math.max(0, 1 - (scrollY / 850));
+      heroContent.style.transform = `translate3d(${contentMouseX}px, ${contentScrollOffset + contentMouseY}px, 0)`;
+      heroContent.style.opacity = opacity;
+    }
+
+    // 3. Subtle 3D Perspective Tilt on the Hero Card
+    if (heroCard && window.innerWidth > 1024) {
+      const tiltX = mouseY * -2.5; // slight pitch
+      const tiltY = mouseX * 3; // slight yaw
+      heroCard.style.transform = `perspective(1200px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+    }
+
+    // 4. Ambient Glowing Lighting Orbs
+    if (scrollY < 1400) {
       parallaxOrbs.forEach((orb) => {
-        const factor = parseFloat(orb.getAttribute('data-scroll-factor') || '0.1');
-        orb.style.marginTop = `${scrollY * factor}px`;
+        const mouseFactor = parseFloat(orb.getAttribute('data-parallax-factor') || '20');
+        const scrollFactor = parseFloat(orb.getAttribute('data-scroll-factor') || '0.14');
+        const ox = mouseX * mouseFactor;
+        const oy = scrollY * scrollFactor + (mouseY * mouseFactor * 0.4);
+        orb.style.transform = `translate3d(${ox}px, ${oy}px, 0)`;
       });
     }
-  }, { passive: true });
+
+    // 5. Floating Dandelion Seeds Multi-Layer Parallax
+    if (scrollY < 1400) {
+      dandelionSeeds.forEach((seed) => {
+        const mouseFactor = parseFloat(seed.getAttribute('data-parallax-factor') || '35');
+        const scrollFactor = parseFloat(seed.getAttribute('data-scroll-factor') || '0.2');
+        const sx = mouseX * mouseFactor;
+        const sy = scrollY * scrollFactor + (mouseY * mouseFactor * 0.5);
+        const rot = mouseX * 18;
+        seed.style.transform = `translate3d(${sx}px, ${sy}px, 0) rotate(${rot}deg)`;
+      });
+    }
+
+    // Continue loop until motion settles
+    const isMoving = Math.abs(targetMouseX - mouseX) > 0.001 || 
+                    Math.abs(targetMouseY - mouseY) > 0.001 || 
+                    Math.abs(targetScrollY - scrollY) > 0.4;
+
+    if (isMoving) {
+      requestAnimationFrame(updateParallax);
+    } else {
+      isTicking = false;
+    }
+  }
+
+  // 6. Interactive 3D Card Hover Tilt Effect
+  initCard3DTilt();
+}
+
+/**
+ * Adds elegant 3D perspective tilt to article cards on hover
+ */
+function initCard3DTilt() {
+  if (window.innerWidth < 1024) return;
+
+  const cards = document.querySelectorAll('article.group');
+  cards.forEach((card) => {
+    if (card.dataset.tiltBound) return;
+    card.dataset.tiltBound = 'true';
+
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = ((y - centerY) / centerY) * -5; // max 5 deg tilt
+      const rotateY = ((x - centerX) / centerX) * 5; // max 5 deg tilt
+      
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
 }
 
 /* ----------------------------------------------------
@@ -162,6 +275,7 @@ function initArticleFeedManager() {
           while (tempDiv.firstChild) {
             feedContainer.appendChild(tempDiv.firstChild);
           }
+          initCard3DTilt();
         }
         currentPage = data.current_page;
         hasNextPage = data.has_next;
@@ -266,6 +380,7 @@ function initArticleFeedManager() {
             <p class="text-sm text-text-muted">لطفاً عبارت دیگری را جستجو کنید یا دسته‌بندی دیگری انتخاب نمایید.</p>
           </div>
         `;
+        initCard3DTilt();
         currentPage = 1;
         hasNextPage = data.has_next;
         if (resultCountBadge) {

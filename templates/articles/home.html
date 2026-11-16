@@ -8,29 +8,36 @@
 <section id="hero-section" class="relative overflow-hidden pt-12 sm:pt-16 pb-12 sm:pb-16 border-b border-border-color bg-gradient-to-b from-bg-secondary/70 via-bg-primary to-bg-primary">
   
   <!-- Ambient Parallax Lighting Orbs -->
-  <div class="parallax-orb absolute -top-24 right-10 w-[32rem] h-[32rem] rounded-full bg-brand-orange/15 blur-3xl pointer-events-none" data-parallax-factor="25" data-scroll-factor="0.15"></div>
-  <div class="parallax-orb absolute top-28 left-8 w-[30rem] h-[30rem] rounded-full bg-brand-purple/15 blur-3xl pointer-events-none" data-parallax-factor="-30" data-scroll-factor="0.12"></div>
-  <div class="parallax-orb absolute -bottom-16 right-1/3 w-80 h-80 rounded-full bg-amber-400/10 blur-3xl pointer-events-none" data-parallax-factor="15" data-scroll-factor="0.08"></div>
+  <div class="parallax-orb absolute -top-24 right-10 w-[32rem] h-[32rem] rounded-full bg-brand-orange/15 blur-3xl pointer-events-none parallax-smooth" data-parallax-factor="25" data-scroll-factor="0.18"></div>
+  <div class="parallax-orb absolute top-28 left-8 w-[30rem] h-[30rem] rounded-full bg-brand-purple/15 blur-3xl pointer-events-none parallax-smooth" data-parallax-factor="-30" data-scroll-factor="0.14"></div>
+  <div class="parallax-orb absolute -bottom-16 right-1/3 w-80 h-80 rounded-full bg-amber-400/10 blur-3xl pointer-events-none parallax-smooth" data-parallax-factor="15" data-scroll-factor="0.1"></div>
 
-  <!-- Decorative Floating Dandelion Seeds -->
-  <div class="floating-seed absolute top-14 right-1/4 pointer-events-none animate-float-slow opacity-60 hidden md:block" data-parallax-factor="45">
+  <!-- Decorative Floating Dandelion Seeds with Parallax Depth -->
+  <div class="floating-seed absolute top-14 right-1/4 pointer-events-none animate-float-slow opacity-60 hidden md:block parallax-smooth" data-parallax-factor="45" data-scroll-factor="0.25">
     <img src="{% static 'images/logo.svg' %}" alt="Dandi Seed" class="w-8 h-8 opacity-75">
   </div>
-  <div class="floating-seed absolute top-36 left-1/4 pointer-events-none animate-float-reverse opacity-50 hidden md:block" data-parallax-factor="-40">
+  <div class="floating-seed absolute top-36 left-1/4 pointer-events-none animate-float-reverse opacity-50 hidden md:block parallax-smooth" data-parallax-factor="-40" data-scroll-factor="-0.18">
     <img src="{% static 'images/logo.svg' %}" alt="Dandi Seed" class="w-6 h-6 opacity-60">
+  </div>
+  <div class="floating-seed absolute top-72 right-12 pointer-events-none animate-float-slow opacity-40 hidden lg:block parallax-smooth" data-parallax-factor="30" data-scroll-factor="0.15">
+    <img src="{% static 'images/logo.svg' %}" alt="Dandi Seed" class="w-7 h-7 opacity-55">
+  </div>
+  <div class="floating-seed absolute -bottom-8 left-16 pointer-events-none animate-float-reverse opacity-45 hidden lg:block parallax-smooth" data-parallax-factor="-25" data-scroll-factor="0.22">
+    <img src="{% static 'images/logo.svg' %}" alt="Dandi Seed" class="w-5 h-5 opacity-60">
   </div>
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     
     <!-- FULL ROW PANORAMIC HERO SHOWCASE WITH IMMERSIVE TEXT OVERLAY -->
-    <div class="w-full relative rounded-3xl p-[1px] bg-gradient-to-b from-brand-orange/40 via-brand-purple/40 to-transparent shadow-2xl overflow-hidden group">
+    <div id="hero-card-container" class="w-full relative rounded-3xl p-[1px] bg-gradient-to-b from-brand-orange/40 via-brand-purple/40 to-transparent shadow-2xl overflow-hidden group parallax-smooth transition-transform duration-300 ease-out">
       <div class="relative rounded-[23px] overflow-hidden w-full min-h-[520px] sm:min-h-[560px] lg:min-h-[600px] flex items-center justify-center p-6 sm:p-12 lg:p-16">
         
-        <!-- Hero Background Image (Intellectual writer with manuscripts & journals) -->
+        <!-- Hero Background Image with Parallax Depth (Intellectual writer with manuscripts & journals) -->
         <img 
+          id="hero-parallax-bg"
           src="{% static 'images/hero-art.jpg' %}" 
           alt="دَندی - اندیشه‌ها، علم، هنر و جهان نو" 
-          class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-[1.02] transition-transform duration-1000 ease-out"
+          class="absolute inset-x-0 -top-20 -bottom-20 w-full h-[calc(100%+10rem)] object-cover object-center will-change-transform pointer-events-none parallax-smooth"
         />
         
         <!-- Editorial Multi-Layer Dark Scrim for High-Contrast Typography -->
@@ -41,8 +48,8 @@
         <!-- Layer 3: Central spotlight contrast vignette -->
         <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(0,0,0,0.45)_0%,_rgba(0,0,0,0.85)_100%)] pointer-events-none"></div>
 
-        <!-- Overlaid Content Box: Slogan, Headline, Subtitle, and Search Box -->
-        <div class="relative z-10 text-center max-w-4xl mx-auto space-y-6 sm:space-y-8">
+        <!-- Overlaid Content Box: Slogan, Headline, Subtitle, and Search Box (Parallax Layer) -->
+        <div id="hero-parallax-content" class="relative z-10 text-center max-w-4xl mx-auto space-y-6 sm:space-y-8 will-change-transform parallax-smooth">
           
           <!-- Slogan Pill with Frosted Glass -->
           <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20 shadow-lg text-xs font-semibold text-white">
