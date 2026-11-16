@@ -174,30 +174,71 @@ function initArticleFeedManager() {
       });
   }
 
-  // Live search debouncing
+  // Live search debouncing & visual feedback elements
+  const searchFeedback = document.getElementById('live-search-feedback');
+  const searchFeedbackText = document.getElementById('search-feedback-text');
+  const searchFeedbackIcon = document.getElementById('search-feedback-icon');
+  const searchScrollBtn = document.getElementById('search-scroll-to-results-btn');
+  const articlesAnchor = document.getElementById('articles-heading-anchor');
+
   let searchTimeout = null;
-  function handleSearchInput(value) {
+  function handleSearchInput(value, shouldScroll = false) {
     clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(() => {
-      currentQuery = value.trim();
-      currentPage = 1;
-      executeSearch();
-    }, 320);
-  }
+    currentQuery = value.trim();
 
-  if (searchInput) {
-    searchInput.addEventListener('input', (e) => handleSearchInput(e.target.value));
-  }
-  if (heroSearchInput) {
-    heroSearchInput.addEventListener('input', (e) => {
-      if (searchInput && searchInput !== heroSearchInput) {
-        searchInput.value = e.target.value;
+    if (searchFeedback) {
+      if (currentQuery) {
+        searchFeedback.classList.remove('hidden');
+        if (searchFeedbackText) searchFeedbackText.textContent = `در حال جستجوی «${currentQuery}»...`;
+        if (searchFeedbackIcon) searchFeedbackIcon.className = 'w-2.5 h-2.5 rounded-full bg-brand-orange animate-ping';
+      } else {
+        searchFeedback.classList.add('hidden');
       }
-      handleSearchInput(e.target.value);
-    });
+    }
+
+    searchTimeout = setTimeout(() => {
+      currentPage = 1;
+      executeSearch(shouldScroll);
+    }, 280);
   }
 
-  function executeSearch() {
+  function scrollToResults() {
+    if (articlesAnchor) {
+      articlesAnchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      articlesAnchor.classList.add('ring-4', 'ring-brand-purple/40', 'bg-brand-purple/5', 'p-4', 'rounded-3xl');
+      setTimeout(() => {
+        articlesAnchor.classList.remove('ring-4', 'ring-brand-purple/40', 'bg-brand-purple/5', 'p-4', 'rounded-3xl');
+      }, 2200);
+    }
+  }
+
+  if (searchScrollBtn) {
+    searchScrollBtn.addEventListener('click', () => scrollToResults());
+  }
+
+  // Bind input listeners
+  [searchInput, heroSearchInput].forEach((inputEl) => {
+    if (!inputEl) return;
+
+    inputEl.addEventListener('input', (e) => {
+      const val = e.target.value;
+      if (searchInput && searchInput !== e.target) searchInput.value = val;
+      if (heroSearchInput && heroSearchInput !== e.target) heroSearchInput.value = val;
+      handleSearchInput(val, false);
+    });
+
+    // On Enter key: instantly search and smooth-scroll to results
+    inputEl.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        clearTimeout(searchTimeout);
+        currentQuery = inputEl.value.trim();
+        executeSearch(true);
+      }
+    });
+  });
+
+  function executeSearch(autoScroll = false) {
     isLoading = true;
     showLoading(true);
 
@@ -220,9 +261,47 @@ function initArticleFeedManager() {
         currentPage = 1;
         hasNextPage = data.has_next;
         if (resultCountBadge) {
-          resultCountBadge.textContent = `${data.total_count} مقاله`;
+          resultCountBadge.textContent = `${data.total_count} مقاله موجود`;
         }
         updateSentinelVisibility();
+
+        // Update Search Feedback Banner
+        if (searchFeedback) {
+          if (currentQuery) {
+            searchFeedback.classList.remove('hidden');
+            if (data.total_count > 0) {
+              if (searchFeedbackText) {
+                searchFeedbackText.innerHTML = `یافت شد: <strong class="text-brand-orange">${data.total_count} مقاله</strong> برای «${currentQuery}»`;
+              }
+              if (searchFeedbackIcon) {
+                searchFeedbackIcon.className = 'w-2.5 h-2.5 rounded-full bg-emerald-500';
+              }
+              if (searchScrollBtn) {
+                searchScrollBtn.classList.remove('hidden');
+                searchScrollBtn.innerHTML = `
+                  <span>مشاهده ${data.total_count} نتیجه</span>
+                  <svg class="w-3.5 h-3.5 rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                `;
+              }
+              // If user pressed enter, or if autoScroll requested, scroll smoothly
+              if (autoScroll) {
+                scrollToResults();
+              }
+            } else {
+              if (searchFeedbackText) {
+                searchFeedbackText.textContent = `هیچ مقاله‌ای برای «${currentQuery}» یافت نشد.`;
+              }
+              if (searchFeedbackIcon) {
+                searchFeedbackIcon.className = 'w-2.5 h-2.5 rounded-full bg-rose-500';
+              }
+              if (searchScrollBtn) {
+                searchScrollBtn.classList.add('hidden');
+              }
+            }
+          } else {
+            searchFeedback.classList.add('hidden');
+          }
+        }
       })
       .catch((err) => console.error('Search error:', err))
       .finally(() => {

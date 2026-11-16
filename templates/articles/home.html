@@ -122,6 +122,18 @@
           </a>
           {% endif %}
         </div>
+
+        <!-- Live Search Feedback Indicator -->
+        <div id="live-search-feedback" class="hidden mt-3.5 max-w-2xl mx-auto flex items-center justify-between px-4 py-2.5 rounded-2xl glass-panel border border-brand-purple/40 text-xs font-semibold shadow-xl transition-all duration-300">
+          <div class="flex items-center gap-2.5">
+            <span id="search-feedback-icon" class="w-2.5 h-2.5 rounded-full bg-brand-orange animate-pulse"></span>
+            <span id="search-feedback-text" class="text-text-primary">در حال جستجو...</span>
+          </div>
+          <button id="search-scroll-to-results-btn" type="button" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-brand-orange to-brand-purple text-white text-[11px] font-black hover:opacity-90 shadow-md transition">
+            <span>مشاهده نتایج در پایین</span>
+            <svg class="w-3.5 h-3.5 rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -347,7 +359,8 @@
   <!-- Articles Dynamic Grid -->
   <div>
     <div
-      class="flex items-center justify-between mb-10 pb-4 border-b border-border-color"
+      id="articles-heading-anchor"
+      class="flex items-center justify-between mb-10 pb-4 border-b border-border-color transition-all duration-500 scroll-mt-24"
     >
       <h2
         class="text-xl sm:text-2xl font-black text-text-primary flex items-center gap-3"
