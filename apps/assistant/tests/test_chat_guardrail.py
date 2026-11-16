@@ -17,7 +17,7 @@ class ChatGuardrailTest(TestCase):
         for user_msg in inputs:
             result = ChatGuardrail.evaluate_message(user_msg)
             self.assertIsNotNone(result, f"Expected guardrail violation for: {user_msg}")
-            self.assertIn("پایگاه داده", result)
+            self.assertIn("دیتابیس", result)
 
     def test_memory_wipe_attempt_triggers_guardrail(self):
         inputs = [
