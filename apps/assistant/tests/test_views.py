@@ -95,3 +95,23 @@ class AssistantViewsTest(TestCase):
         data = response.json()
         self.assertEqual(data['status'], 'success')
         self.assertIn('conversation_id', data)
+
+    def test_switch_conversation_via_query_param(self):
+        self.client.login(username='dandiuser', password='password123')
+        from apps.assistant.models.conversation import Conversation
+        conv = Conversation.objects.create(user=self.user, title='گفتگوی گذشته')
+
+        response = self.client.get(f"{self.chat_url}?c={conv.id}")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['conversation'].id, conv.id)
+        self.assertIn(conv, response.context['user_conversations'])
+
+    def test_delete_conversation_api(self):
+        self.client.login(username='dandiuser', password='password123')
+        from apps.assistant.models.conversation import Conversation
+        conv = Conversation.objects.create(user=self.user, title='گفتگو برای حذف')
+
+        delete_url = reverse('assistant:api_delete_chat', kwargs={'conversation_id': conv.id})
+        response = self.client.post(delete_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(Conversation.objects.filter(pk=conv.id).exists())

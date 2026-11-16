@@ -1,5 +1,5 @@
 import logging
-from typing import Tuple
+from typing import Tuple, Optional
 from django.contrib.auth.models import User
 from pydantic_ai.messages import ModelMessage, ModelRequest, ModelResponse, UserPromptPart, TextPart
 
@@ -31,7 +31,12 @@ class AssistantService:
     LONG_TERM_DISPLAY_LIMIT = 50
 
     @classmethod
-    def process_chat_message(cls, user: User, raw_message: str) -> ChatResponse:
+    def process_chat_message(
+        cls,
+        user: User,
+        raw_message: str,
+        conversation_id: Optional[int] = None
+    ) -> ChatResponse:
         """
         Processes a chat message with rate limiting, multi-turn memory injection, and database persistence.
         """
@@ -43,8 +48,13 @@ class AssistantService:
         # 2. Sanitize and validate input
         clean_message = cls._sanitize_user_input(raw_message)
 
-        # 3. Retrieve or create active conversation
-        conversation = ConversationRepository.get_or_create_active_conversation(user)
+        # 3. Retrieve target or active conversation
+        conversation = None
+        if conversation_id:
+            conversation = ConversationRepository.get_conversation_by_id(user, conversation_id)
+
+        if not conversation:
+            conversation = ConversationRepository.get_or_create_active_conversation(user)
 
         # 4. Build short-term memory (last 15 messages) for LLM context continuity
         history_records = ConversationRepository.get_short_term_context(
@@ -109,16 +119,35 @@ class AssistantService:
         )
 
     @classmethod
-    def get_conversation_history(cls, user: User) -> Tuple[Conversation, list[ChatMessage]]:
+    def get_conversation_history(
+        cls,
+        user: User,
+        conversation_id: Optional[int] = None
+    ) -> Tuple[Conversation, list[ChatMessage], list[Conversation]]:
         """
-        Returns active conversation and up to 50 recent messages for web display.
+        Returns target/active conversation, its messages, and user's full past conversations list.
         """
-        conversation = ConversationRepository.get_or_create_active_conversation(user)
+        user_conversations = ConversationRepository.get_user_conversations(user)
+
+        conversation = None
+        if conversation_id:
+            conversation = ConversationRepository.get_conversation_by_id(user, conversation_id)
+
+        if not conversation:
+            conversation = ConversationRepository.get_or_create_active_conversation(user)
+
         messages = ConversationRepository.get_recent_messages(
             conversation,
             limit=cls.LONG_TERM_DISPLAY_LIMIT
         )
-        return conversation, messages
+        return conversation, messages, user_conversations
+
+    @classmethod
+    def delete_conversation(cls, user: User, conversation_id: int) -> bool:
+        """
+        Deletes a conversation owned by the user.
+        """
+        return ConversationRepository.delete_conversation(user, conversation_id)
 
     @classmethod
     def start_new_session(cls, user: User) -> Conversation:

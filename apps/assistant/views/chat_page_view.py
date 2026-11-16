@@ -14,12 +14,22 @@ class ChatPageView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         user = self.request.user
 
-        # Fetch active conversation and up to 50 stored messages (Long-term memory)
-        conversation, existing_messages = AssistantService.get_conversation_history(user)
+        # Optional target conversation query param (?c=123)
+        target_conv_id = None
+        raw_c = self.request.GET.get('c')
+        if raw_c and raw_c.isdigit():
+            target_conv_id = int(raw_c)
+
+        # Fetch conversation, up to 50 stored messages, and full user history
+        conversation, existing_messages, user_conversations = AssistantService.get_conversation_history(
+            user=user,
+            conversation_id=target_conv_id
+        )
 
         context['page_title'] = 'دستیار هوشمند دَندی'
         context['conversation'] = conversation
         context['existing_messages'] = existing_messages
+        context['user_conversations'] = user_conversations
         context['sample_prompts'] = [
             'یک مقاله الهام‌بخش درباره تمرکز عمیق، فلسفه یا هنر آهستگی پیشنهاد بده.',
             'آیا مقاله‌ای درباره هوش مصنوعی یا کامپیوتر کوانتومی داری؟',

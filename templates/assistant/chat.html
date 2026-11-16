@@ -4,32 +4,45 @@
 {% block title %}دستیار هوشمند دَندی | گفتگو و کاوش در جستارها{% endblock %}
 
 {% block content %}
-<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
   
-  <!-- Assistant Header & Intro -->
-  <div class="mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-6 border-b border-border-color">
-    <div class="flex items-center gap-4">
-      <div class="relative w-14 h-14 rounded-2xl bg-gradient-to-tr from-brand-orange to-brand-purple p-[2px] shadow-lg shadow-brand-purple/20 flex-shrink-0">
+  <!-- Assistant Header & Actions -->
+  <div class="mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-5 border-b border-border-color">
+    <div class="flex items-center gap-3.5">
+      <div class="relative w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-orange to-brand-purple p-[2px] shadow-lg shadow-brand-purple/20 flex-shrink-0">
         <div class="w-full h-full rounded-[14px] bg-card-bg flex items-center justify-center">
-          <svg class="w-7 h-7 text-brand-orange animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-6 h-6 text-brand-orange animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
         </div>
-        <span class="absolute -bottom-1 -left-1 flex h-3.5 w-3.5">
+        <span class="absolute -bottom-1 -left-1 flex h-3 w-3">
           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-          <span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border-2 border-card-bg"></span>
+          <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 border-2 border-card-bg"></span>
         </span>
       </div>
       <div>
-        <h1 class="text-2xl font-black text-text-primary tracking-tight">دستیار هوشمند دَندی</h1>
-        <p class="text-xs text-text-secondary mt-1">
+        <h1 class="text-xl sm:text-2xl font-black text-text-primary tracking-tight">دستیار هوشمند دَندی</h1>
+        <p class="text-xs text-text-secondary mt-0.5">
           کاوش مفهومی، پرسش‌وپاسخ و پیشنهاد هوشمندانه مقالات متناسب با علایق شما
         </p>
       </div>
     </div>
 
-    <!-- Actions Bar: New Chat, Guide & User Status -->
+    <!-- Actions Bar -->
     <div class="flex items-center gap-2.5 w-full sm:w-auto justify-between sm:justify-end flex-wrap">
+      <!-- Toggle History Button (Visible on mobile/tablet) -->
+      <button 
+        type="button" 
+        id="toggle-history-btn"
+        class="lg:hidden px-3 py-2 text-xs font-bold rounded-xl border border-border-color bg-card-bg hover:bg-bg-secondary text-text-primary transition duration-200 flex items-center gap-1.5 shadow-sm"
+        title="نمایش یا پنهان‌سازی تاریخچه گفتگوها"
+      >
+        <svg class="w-4 h-4 text-brand-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>تاریخچه گفتگوها</span>
+      </button>
+
       <!-- Guide Page Link -->
       <a 
         href="{% url 'assistant:guide' %}" 
@@ -46,17 +59,17 @@
       <button 
         type="button" 
         id="new-chat-btn"
-        class="px-3.5 py-2 text-xs font-bold rounded-xl border border-border-color bg-card-bg hover:bg-bg-secondary text-text-primary hover:border-brand-purple/40 transition duration-200 flex items-center gap-1.5 shadow-sm"
-        title="شروع گفتگوی جدید و پاکسازی حافظه موقت"
+        class="px-3.5 py-2 text-xs font-bold rounded-xl border border-brand-orange/30 bg-brand-orange/10 hover:bg-brand-orange/20 text-brand-orange transition duration-200 flex items-center gap-1.5 shadow-sm cursor-pointer"
+        title="شروع گفتگوی تازه"
       >
-        <svg class="w-4 h-4 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
         </svg>
         <span>گفتگوی جدید</span>
       </button>
 
       <!-- Active User Status -->
-      <div class="hidden sm:flex items-center gap-2 text-xs text-text-muted px-3.5 py-2 rounded-xl bg-bg-secondary border border-border-color">
+      <div class="hidden sm:flex items-center gap-2 text-xs text-text-muted px-3 py-2 rounded-xl bg-bg-secondary border border-border-color">
         <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
         <span>کاربر: <strong class="text-text-primary">{{ user.username }}</strong></span>
       </div>
@@ -65,183 +78,239 @@
 
   <!-- Main Chat Window Card with Theme-Aware Ambient Shadow & Glowing Border -->
   <div class="relative rounded-3xl p-[1.5px] bg-gradient-to-b from-brand-orange/30 via-brand-purple/20 to-border-color shadow-[0_20px_60px_-15px_rgba(147,51,234,0.18),0_10px_30px_-10px_rgba(249,115,22,0.15)] dark:shadow-[0_25px_70px_-15px_rgba(168,85,247,0.28),0_12px_35px_-10px_rgba(251,146,60,0.22)] transition-shadow duration-500">
-    <div class="rounded-[22px] bg-card-bg/95 backdrop-blur-xl overflow-hidden flex flex-col h-[75vh] min-h-[580px] max-h-[820px]">
-    
-    <!-- Messages Scroll Area -->
-    <div id="chat-messages-container" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
+    <div class="rounded-[22px] bg-card-bg/95 backdrop-blur-xl overflow-hidden flex flex-col lg:flex-row h-[78vh] min-h-[600px] max-h-[850px]">
       
-      <!-- Welcome Message from Assistant (Shown if empty) -->
-      {% if not existing_messages %}
-        <div id="welcome-message-block" class="flex items-start gap-3.5 max-w-3xl">
-          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-orange to-brand-purple p-[1.5px] flex-shrink-0 mt-1">
-            <div class="w-full h-full rounded-[10px] bg-card-bg flex items-center justify-center">
-              <span class="text-xs font-black text-brand-purple">دَندی</span>
-            </div>
+      <!-- Conversation History Sidebar -->
+      <aside 
+        id="history-sidebar" 
+        class="hidden lg:flex w-full lg:w-72 border-b lg:border-b-0 lg:border-l border-border-color bg-bg-secondary/40 flex-col flex-shrink-0 transition-all duration-300"
+      >
+        <div class="p-3.5 border-b border-border-color/70 flex items-center justify-between">
+          <div class="flex items-center gap-2 text-xs font-bold text-text-primary">
+            <svg class="w-4 h-4 text-brand-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>گفتگوهای پیشین</span>
           </div>
-          <div class="space-y-3">
-            <div class="p-4 sm:p-5 rounded-2xl rounded-tr-none bg-bg-secondary/70 border border-border-color text-xs sm:text-sm text-text-primary leading-relaxed shadow-sm">
-              درود بر شما <strong class="text-brand-orange">{{ user.username }}</strong> گرامی! 
-              من دستیار هوشمند و پژوهشی تحریریه مجله دَندی هستم. 
-              می‌توانید درباره هر موضوعی با من گفتگو کنید تا عمیق‌ترین جستارها و مقالات مرتبطِ منتشرشده در دَندی را برای شما بیابم و پیشنهاد دهم.
-            </div>
-
-            <!-- Quick Suggestion Pills -->
-            <div class="space-y-1.5 pt-1">
-              <span class="text-[11px] font-semibold text-text-muted">پیشنهادهای شروع سریع:</span>
-              <div class="flex flex-wrap gap-2">
-                {% for prompt in sample_prompts %}
-                  <button 
-                    type="button" 
-                    class="quick-prompt-btn px-3 py-1.5 rounded-xl text-xs bg-bg-secondary hover:bg-brand-purple/10 text-text-secondary hover:text-brand-purple border border-border-color hover:border-brand-purple/30 transition duration-200 text-right cursor-pointer"
-                    data-prompt="{{ prompt }}"
-                  >
-                    {{ prompt }}
-                  </button>
-                {% endfor %}
-              </div>
-            </div>
-          </div>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand-purple/10 text-brand-purple">
+            {{ user_conversations|length }}
+          </span>
         </div>
-      {% endif %}
 
-      <!-- Existing Persistent Messages from Database (Long-term Memory up to 50 turns) -->
-      {% for msg in existing_messages %}
-        {% if msg.sender == 'user' %}
-          <div class="flex justify-end">
-            <div class="max-w-2xl p-4 rounded-2xl rounded-tl-none bg-gradient-to-r from-brand-orange to-brand-purple text-white text-xs sm:text-sm leading-relaxed shadow-md shadow-brand-purple/15">
-              {{ msg.content|linebreaksbr }}
+        <!-- Conversations List -->
+        <div class="flex-1 overflow-y-auto p-2.5 space-y-1.5">
+          {% for conv in user_conversations %}
+            <div class="group relative flex items-center justify-between rounded-xl px-3 py-2.5 text-xs transition duration-200 {% if conv.id == conversation.id %}bg-brand-purple/15 text-brand-purple font-bold border border-brand-purple/30 shadow-sm{% else %}hover:bg-card-bg text-text-secondary hover:text-text-primary border border-transparent hover:border-border-color{% endif %}">
+              <a href="{% url 'assistant:chat' %}?c={{ conv.id }}" class="flex items-center gap-2 flex-1 min-w-0" title="{{ conv.title }}">
+                <svg class="w-3.5 h-3.5 flex-shrink-0 {% if conv.id == conversation.id %}text-brand-orange{% else %}text-text-muted{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+                <div class="flex-1 min-w-0">
+                  <p class="truncate leading-snug">{{ conv.title }}</p>
+                  <span class="text-[10px] text-text-muted font-normal block mt-0.5">{{ conv.updated_at|date:"Y/m/d" }}</span>
+                </div>
+              </a>
+
+              <!-- Delete Button -->
+              <button 
+                type="button" 
+                onclick="deleteConversation({{ conv.id }}, event)"
+                class="opacity-0 group-hover:opacity-100 p-1 text-text-muted hover:text-rose-500 rounded-md transition duration-200"
+                title="حذف این گفتگو"
+              >
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
             </div>
-          </div>
-        {% else %}
-          <div class="flex items-start gap-3.5 max-w-3xl">
-            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-orange to-brand-purple p-[1.5px] flex-shrink-0 mt-1">
-              <div class="w-full h-full rounded-[10px] bg-card-bg flex items-center justify-center">
-                <span class="text-xs font-black text-brand-purple">دَندی</span>
+          {% empty %}
+            <div class="py-8 text-center text-xs text-text-muted">
+              هنوز گفتگویی ثبت نشده است.
+            </div>
+          {% endfor %}
+        </div>
+      </aside>
+
+      <!-- Active Chat Window Container -->
+      <main class="flex-1 flex flex-col h-full overflow-hidden">
+        
+        <!-- Messages Scroll Area -->
+        <div id="chat-messages-container" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
+          
+          <!-- Welcome Message from Assistant (Shown if current conversation is empty) -->
+          {% if not existing_messages %}
+            <div id="welcome-message-block" class="flex items-start gap-3.5 max-w-3xl">
+              <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-orange to-brand-purple p-[1.5px] flex-shrink-0 mt-1">
+                <div class="w-full h-full rounded-[10px] bg-card-bg flex items-center justify-center">
+                  <span class="text-xs font-black text-brand-purple">دَندی</span>
+                </div>
               </div>
-            </div>
-            <div class="space-y-2 flex-1">
-              <div class="p-4 sm:p-5 rounded-2xl rounded-tr-none bg-bg-secondary/70 border border-border-color text-xs sm:text-sm text-text-primary leading-relaxed shadow-sm message-content-rendered" data-raw="{{ msg.content|escapejs }}">
-                <!-- Rendered dynamically by script or fallback -->
-                {{ msg.content|linebreaksbr }}
+              <div class="space-y-3">
+                <div class="p-4 sm:p-5 rounded-2xl rounded-tr-none bg-bg-secondary/70 border border-border-color text-xs sm:text-sm text-text-primary leading-relaxed shadow-sm">
+                  درود بر شما <strong class="text-brand-orange">{{ user.username }}</strong> گرامی! 
+                  من دستیار هوشمند و پژوهشی تحریریه مجله دَندی هستم. 
+                  می‌توانید درباره هر موضوعی با من گفتگو کنید تا عمیق‌ترین جستارها و مقالات مرتبطِ منتشرشده در دَندی را برای شما بیابم و پیشنهاد دهم.
+                </div>
 
-                <!-- Stored Suggested Articles for this message -->
-                {% if msg.suggested_articles_data %}
-                  <div class="mt-4 pt-3 border-t border-border-color/80 space-y-2.5">
-                    <div class="text-[11px] font-bold text-text-muted flex items-center gap-1.5">
-                      <span class="w-1.5 h-1.5 rounded-full bg-brand-orange"></span>
-                      <span>مقاله‌های پیشنهادی در این موضوع:</span>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                      {% for article in msg.suggested_articles_data %}
-                        <a 
-                          href="{{ article.url }}" 
-                          target="_blank" 
-                          class="group rounded-2xl border border-border-color bg-card-bg hover:border-brand-purple/50 hover:shadow-lg hover:shadow-brand-purple/10 transition-all duration-300 flex flex-col overflow-hidden text-right"
-                        >
-                          <div class="relative aspect-[16/10] w-full overflow-hidden bg-bg-secondary">
-                            {% if article.cover_image_url %}
-                              <img 
-                                src="{{ article.cover_image_url }}" 
-                                alt="{{ article.title }}" 
-                                loading="lazy"
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                              >
-                            {% else %}
-                              <div class="w-full h-full bg-gradient-to-tr from-brand-orange/20 to-brand-purple/30 flex items-center justify-center">
-                                <span class="text-xs font-bold text-text-muted">مجله دَندی</span>
-                              </div>
-                            {% endif %}
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-                            
-                            <span class="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-lg text-[10px] font-black backdrop-blur-md bg-black/60 text-white border border-white/20">
-                              {{ article.category_name|default:'دَندی' }}
-                            </span>
-
-                            <span class="absolute bottom-2 right-2.5 text-[10px] text-white/95 font-medium flex items-center gap-1">
-                              <svg class="w-3 h-3 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                              {{ article.reading_time }} دقیقه مطالعه
-                            </span>
-                          </div>
-
-                          <div class="p-3.5 flex flex-col justify-between flex-1">
-                            <div>
-                              <h4 class="text-xs sm:text-sm font-bold text-text-primary group-hover:text-brand-orange transition line-clamp-2 leading-snug">
-                                {{ article.title }}
-                              </h4>
-                              <p class="text-[11px] text-text-secondary line-clamp-2 mt-1.5 leading-relaxed">
-                                {{ article.summary|default:'' }}
-                              </p>
-                            </div>
-                            <div class="mt-3 pt-2.5 border-t border-border-color/60 flex items-center justify-between text-[11px] font-bold text-brand-purple group-hover:text-brand-orange transition">
-                              <span>مطالعه مقاله</span>
-                              <span class="transform group-hover:-translate-x-1 transition duration-200">←</span>
-                            </div>
-                          </div>
-                        </a>
-                      {% endfor %}
-                    </div>
+                <!-- Quick Suggestion Pills -->
+                <div class="space-y-1.5 pt-1">
+                  <span class="text-[11px] font-semibold text-text-muted">پیشنهادهای شروع سریع:</span>
+                  <div class="flex flex-wrap gap-2">
+                    {% for prompt in sample_prompts %}
+                      <button 
+                        type="button" 
+                        class="quick-prompt-btn px-3 py-1.5 rounded-xl text-xs bg-bg-secondary hover:bg-brand-purple/10 text-text-secondary hover:text-brand-purple border border-border-color hover:border-brand-purple/30 transition duration-200 text-right cursor-pointer"
+                        data-prompt="{{ prompt }}"
+                      >
+                        {{ prompt }}
+                      </button>
+                    {% endfor %}
                   </div>
-                {% endif %}
-
+                </div>
               </div>
             </div>
-          </div>
-        {% endif %}
-      {% endfor %}
+          {% endif %}
 
-    </div>
+          <!-- Existing Persistent Messages from Database (Long-term Memory up to 50 turns) -->
+          {% for msg in existing_messages %}
+            {% if msg.sender == 'user' %}
+              <div class="flex justify-end">
+                <div class="max-w-2xl p-4 rounded-2xl rounded-tl-none bg-gradient-to-r from-brand-orange to-brand-purple text-white text-xs sm:text-sm leading-relaxed shadow-md shadow-brand-purple/15">
+                  {{ msg.content|linebreaksbr }}
+                </div>
+              </div>
+            {% else %}
+              <div class="flex items-start gap-3.5 max-w-3xl">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-orange to-brand-purple p-[1.5px] flex-shrink-0 mt-1">
+                  <div class="w-full h-full rounded-[10px] bg-card-bg flex items-center justify-center">
+                    <span class="text-xs font-black text-brand-purple">دَندی</span>
+                  </div>
+                </div>
+                <div class="space-y-2 flex-1">
+                  <div class="p-4 sm:p-5 rounded-2xl rounded-tr-none bg-bg-secondary/70 border border-border-color text-xs sm:text-sm text-text-primary leading-relaxed shadow-sm message-content-rendered" data-raw="{{ msg.content|escapejs }}">
+                    {{ msg.content|linebreaksbr }}
 
-    <!-- Rate Limit Alert Banner (Hidden by default) -->
-    <div id="rate-limit-banner" class="hidden px-6 py-3 bg-amber-500/10 border-t border-amber-500/30 text-amber-600 dark:text-amber-400 text-xs font-semibold flex items-center gap-2">
-      <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-      </svg>
-      <span id="rate-limit-text">تعداد درخواست‌های شما بیش از حد مجاز است. لطفاً کمی صبر فرمایید.</span>
-    </div>
+                    <!-- Stored Suggested Articles for this message (Capped to 2-3) -->
+                    {% if msg.suggested_articles_data %}
+                      <div class="mt-4 pt-3 border-t border-border-color/80 space-y-2.5">
+                        <div class="text-[11px] font-bold text-text-muted flex items-center gap-1.5">
+                          <span class="w-1.5 h-1.5 rounded-full bg-brand-orange"></span>
+                          <span>مقاله‌های پیشنهادی در این موضوع:</span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                          {% for article in msg.suggested_articles_data|slice:":3" %}
+                            <a 
+                              href="{{ article.url }}" 
+                              target="_blank" 
+                              class="group rounded-2xl border border-border-color bg-card-bg hover:border-brand-purple/50 hover:shadow-lg hover:shadow-brand-purple/10 transition-all duration-300 flex flex-col overflow-hidden text-right"
+                            >
+                              <div class="relative aspect-[16/10] w-full overflow-hidden bg-bg-secondary">
+                                {% if article.cover_image_url %}
+                                  <img 
+                                    src="{{ article.cover_image_url }}" 
+                                    alt="{{ article.title }}" 
+                                    loading="lazy"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                  >
+                                {% else %}
+                                  <div class="w-full h-full bg-gradient-to-tr from-brand-orange/20 to-brand-purple/30 flex items-center justify-center">
+                                    <span class="text-xs font-bold text-text-muted">مجله دَندی</span>
+                                  </div>
+                                {% endif %}
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                                
+                                <span class="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-lg text-[10px] font-black backdrop-blur-md bg-black/60 text-white border border-white/20">
+                                  {{ article.category_name|default:'دَندی' }}
+                                </span>
 
-    <!-- Typing Indicator (Hidden by default) -->
-    <div id="typing-indicator" class="hidden px-6 py-3 bg-bg-secondary/40 border-t border-border-color/50">
-      <div class="flex items-center gap-2.5 text-xs text-text-muted">
-        <div class="flex items-center gap-1">
-          <span class="w-2 h-2 rounded-full bg-brand-orange animate-bounce"></span>
-          <span class="w-2 h-2 rounded-full bg-brand-purple animate-bounce [animation-delay:0.2s]"></span>
-          <span class="w-2 h-2 rounded-full bg-brand-orange animate-bounce [animation-delay:0.4s]"></span>
+                                <span class="absolute bottom-2 right-2.5 text-[10px] text-white/95 font-medium flex items-center gap-1">
+                                  <svg class="w-3 h-3 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                  {{ article.reading_time }} دقیقه مطالعه
+                                </span>
+                              </div>
+
+                              <div class="p-3.5 flex flex-col justify-between flex-1">
+                                <div>
+                                  <h4 class="text-xs sm:text-sm font-bold text-text-primary group-hover:text-brand-orange transition line-clamp-2 leading-snug">
+                                    {{ article.title }}
+                                  </h4>
+                                  <p class="text-[11px] text-text-secondary line-clamp-2 mt-1.5 leading-relaxed">
+                                    {{ article.summary|default:'' }}
+                                  </p>
+                                </div>
+                                <div class="mt-3 pt-2.5 border-t border-border-color/60 flex items-center justify-between text-[11px] font-bold text-brand-purple group-hover:text-brand-orange transition">
+                                  <span>مطالعه مقاله</span>
+                                  <span class="transform group-hover:-translate-x-1 transition duration-200">←</span>
+                                </div>
+                              </div>
+                            </a>
+                          {% endfor %}
+                        </div>
+                      </div>
+                    {% endif %}
+
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+
         </div>
-        <span>دستیار دَندی در حال بررسی موضوع و جستجوی مقالات است...</span>
-      </div>
-    </div>
 
-    <!-- Input Bar Footer -->
-    <div class="p-3 sm:p-4 bg-bg-secondary/80 border-t border-border-color backdrop-blur-md">
-      <form id="chat-form" class="flex items-center gap-2.5">
-        {% csrf_token %}
-        <div class="relative flex-1">
-          <input 
-            type="text" 
-            id="chat-input"
-            rows="1"
-            maxlength="1000"
-            placeholder="درباره چه موضوعی می‌خواهید گفتگو کنید یا مقاله بیابید؟ (مثال: مقاله‌ای درباره هوش مصنوعی)..."
-            class="w-full px-4 py-3 sm:py-3.5 text-xs sm:text-sm rounded-2xl border border-border-color bg-card-bg text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-brand-purple/50 focus:border-brand-purple transition duration-200"
-            autocomplete="off"
-            required
-          >
-        </div>
-        <button 
-          type="submit" 
-          id="send-btn"
-          class="px-5 py-3 sm:py-3.5 rounded-2xl bg-gradient-to-r from-brand-orange to-brand-purple text-white font-bold text-xs sm:text-sm shadow-md shadow-brand-purple/20 hover:opacity-95 hover:shadow-lg disabled:opacity-50 transition duration-200 flex items-center gap-2 flex-shrink-0 cursor-pointer"
-        >
-          <span>ارسال</span>
-          <svg class="w-4 h-4 transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        <!-- Rate Limit Alert Banner -->
+        <div id="rate-limit-banner" class="hidden px-6 py-3 bg-amber-500/10 border-t border-amber-500/30 text-amber-600 dark:text-amber-400 text-xs font-semibold flex items-center gap-2">
+          <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
           </svg>
-        </button>
-      </form>
-    </div>
+          <span id="rate-limit-text">تعداد درخواست‌های شما بیش از حد مجاز است. لطفاً کمی صبر فرمایید.</span>
+        </div>
 
+        <!-- Typing Indicator -->
+        <div id="typing-indicator" class="hidden px-6 py-3 bg-bg-secondary/40 border-t border-border-color/50">
+          <div class="flex items-center gap-2.5 text-xs text-text-muted">
+            <div class="flex items-center gap-1">
+              <span class="w-2 h-2 rounded-full bg-brand-orange animate-bounce"></span>
+              <span class="w-2 h-2 rounded-full bg-brand-purple animate-bounce [animation-delay:0.2s]"></span>
+              <span class="w-2 h-2 rounded-full bg-brand-orange animate-bounce [animation-delay:0.4s]"></span>
+            </div>
+            <span>دستیار دَندی در حال بررسی موضوع و جستجوی مقالات است...</span>
+          </div>
+        </div>
+
+        <!-- Input Bar Footer -->
+        <div class="p-3 sm:p-4 bg-bg-secondary/80 border-t border-border-color backdrop-blur-md">
+          <form id="chat-form" class="flex items-center gap-2.5">
+            {% csrf_token %}
+            <input type="hidden" id="current-conversation-id" value="{{ conversation.id }}">
+            <div class="relative flex-1">
+              <input 
+                type="text" 
+                id="chat-input"
+                rows="1"
+                maxlength="1000"
+                placeholder="درباره چه موضوعی می‌خواهید گفتگو کنید یا مقاله بیابید؟ (مثال: مقاله‌ای درباره هوش مصنوعی)..."
+                class="w-full px-4 py-3 sm:py-3.5 text-xs sm:text-sm rounded-2xl border border-border-color bg-card-bg text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-brand-purple/50 focus:border-brand-purple transition duration-200"
+                autocomplete="off"
+                required
+              >
+            </div>
+            <button 
+              type="submit" 
+              id="send-btn"
+              class="px-5 py-3 sm:py-3.5 rounded-2xl bg-gradient-to-r from-brand-orange to-brand-purple text-white font-bold text-xs sm:text-sm shadow-md shadow-brand-purple/20 hover:opacity-95 hover:shadow-lg disabled:opacity-50 transition duration-200 flex items-center gap-2 flex-shrink-0 cursor-pointer"
+            >
+              <span>ارسال</span>
+              <svg class="w-4 h-4 transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </button>
+          </form>
+        </div>
+
+      </main>
+
+    </div>
   </div>
-</div>
 </div>
 {% endblock %}
 
@@ -256,7 +325,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const rateLimitBanner = document.getElementById('rate-limit-banner');
   const rateLimitText = document.getElementById('rate-limit-text');
   const newChatBtn = document.getElementById('new-chat-btn');
+  const toggleHistoryBtn = document.getElementById('toggle-history-btn');
+  const historySidebar = document.getElementById('history-sidebar');
+  const currentConvIdInput = document.getElementById('current-conversation-id');
   const quickPromptBtns = document.querySelectorAll('.quick-prompt-btn');
+
+  // Toggle History Sidebar on mobile
+  if (toggleHistoryBtn && historySidebar) {
+    toggleHistoryBtn.addEventListener('click', () => {
+      historySidebar.classList.toggle('hidden');
+    });
+  }
 
   // Quick prompt click handler
   quickPromptBtns.forEach(btn => {
@@ -275,8 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  // Scroll to bottom immediately on page load to show recent messages
-  setTimeout(scrollToBottom, 100);
+  setTimeout(scrollToBottom, 120);
 
   // Convert simple markdown into clean HTML safe for display
   const formatMarkdown = (text) => {
@@ -286,17 +364,11 @@ document.addEventListener('DOMContentLoaded', () => {
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
 
-    // Bold **text**
     escaped = escaped.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-    // Italic *text*
     escaped = escaped.replace(/\*(.*?)\*/g, '<em>$1</em>');
-    // Markdown images ![alt](url)
     escaped = escaped.replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="rounded-2xl my-3 max-h-56 w-full object-cover border border-border-color shadow-sm">');
-    // Markdown links [title](url)
     escaped = escaped.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-brand-orange hover:underline font-bold" target="_blank">$1</a>');
-    // Bullet points
     escaped = escaped.replace(/^[\*\-]\s+(.*)$/gm, '<li class="mr-4 list-disc">$1</li>');
-    // Line breaks
     escaped = escaped.replace(/\n/g, '<br>');
     return escaped;
   };
@@ -305,7 +377,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.message-content-rendered').forEach(el => {
     const raw = el.getAttribute('data-raw');
     if (raw) {
-      // Find the text part before articles
       const articleSection = el.querySelector('.border-t');
       const formatted = formatMarkdown(raw);
       if (articleSection) {
@@ -319,6 +390,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Append user message
   const appendUserMessage = (message) => {
+    const welcome = document.getElementById('welcome-message-block');
+    if (welcome) welcome.remove();
+
     const wrapper = document.createElement('div');
     wrapper.className = 'flex justify-end';
     wrapper.innerHTML = `
@@ -330,13 +404,14 @@ document.addEventListener('DOMContentLoaded', () => {
     scrollToBottom();
   };
 
-  // Append assistant message with optional article cards
+  // Append assistant message with optional article cards (Capped to 2-3)
   const appendAssistantMessage = (replyText, articles = []) => {
     const wrapper = document.createElement('div');
     wrapper.className = 'flex items-start gap-3.5 max-w-3xl';
 
+    const safeArticles = (articles || []).slice(0, 3);
     let articlesHtml = '';
-    if (articles && articles.length > 0) {
+    if (safeArticles.length > 0) {
       articlesHtml = `
         <div class="mt-4 pt-3 border-t border-border-color/80 space-y-2.5">
           <div class="text-[11px] font-bold text-text-muted flex items-center gap-1.5">
@@ -344,13 +419,12 @@ document.addEventListener('DOMContentLoaded', () => {
             <span>مقاله‌های پیشنهادی در این موضوع:</span>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-            ${articles.map(article => `
+            ${safeArticles.map(article => `
               <a 
                 href="${article.url}" 
                 target="_blank" 
                 class="group rounded-2xl border border-border-color bg-card-bg hover:border-brand-purple/50 hover:shadow-lg hover:shadow-brand-purple/10 transition-all duration-300 flex flex-col overflow-hidden text-right"
               >
-                <!-- Article Cover Image Banner -->
                 <div class="relative aspect-[16/10] w-full overflow-hidden bg-bg-secondary">
                   ${article.cover_image_url ? `
                     <img 
@@ -366,19 +440,16 @@ document.addEventListener('DOMContentLoaded', () => {
                   `}
                   <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
                   
-                  <!-- Category Badge -->
                   <span class="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-lg text-[10px] font-black backdrop-blur-md bg-black/60 text-white border border-white/20">
                     ${article.category_name || 'دَندی'}
                   </span>
 
-                  <!-- Reading Time Badge -->
                   <span class="absolute bottom-2 right-2.5 text-[10px] text-white/95 font-medium flex items-center gap-1">
                     <svg class="w-3 h-3 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     ${article.reading_time} دقیقه مطالعه
                   </span>
                 </div>
 
-                <!-- Card Body -->
                 <div class="p-3.5 flex flex-col justify-between flex-1">
                   <div>
                     <h4 class="text-xs sm:text-sm font-bold text-text-primary group-hover:text-brand-orange transition line-clamp-2 leading-snug">
@@ -424,10 +495,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const message = chatInput.value.trim();
     if (!message) return;
 
-    // Hide any previous rate limit banner
     rateLimitBanner.classList.add('hidden');
-
-    // Append to UI and clear input
     appendUserMessage(message);
     chatInput.value = '';
     chatInput.disabled = true;
@@ -435,8 +503,8 @@ document.addEventListener('DOMContentLoaded', () => {
     typingIndicator.classList.remove('hidden');
     scrollToBottom();
 
-    // Get CSRF Token
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    const conversationId = currentConvIdInput ? parseInt(currentConvIdInput.value) : null;
 
     try {
       const response = await fetch("{% url 'assistant:api_chat' %}", {
@@ -445,14 +513,16 @@ document.addEventListener('DOMContentLoaded', () => {
           'Content-Type': 'application/json',
           'X-CSRFToken': csrfToken,
         },
-        body: JSON.stringify({ message: message })
+        body: JSON.stringify({ 
+          message: message,
+          conversation_id: conversationId
+        })
       });
 
       const data = await response.json();
       typingIndicator.classList.add('hidden');
 
       if (response.status === 429) {
-        // Rate limited
         rateLimitText.textContent = data.error || 'سقف درخواست‌های مجاز در دقیقه به پایان رسیده است.';
         rateLimitBanner.classList.remove('hidden');
         return;
@@ -481,10 +551,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // New Chat Button Handler
   newChatBtn.addEventListener('click', async () => {
-    if (!confirm('آیا مایلید گفتگوی جدیدی آغاز کنید؟ گفتگوهای قبلی ذخیره می‌شوند.')) {
-      return;
-    }
-
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     try {
       const response = await fetch("{% url 'assistant:api_new_chat' %}", {
@@ -495,13 +561,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
       if (response.ok) {
-        window.location.reload();
+        window.location.href = "{% url 'assistant:chat' %}";
       }
     } catch (err) {
       console.error('New chat error:', err);
-      window.location.reload();
+      window.location.href = "{% url 'assistant:chat' %}";
     }
   });
 });
+
+// Delete a conversation function
+async function deleteConversation(conversationId, event) {
+  event.preventDefault();
+  event.stopPropagation();
+  if (!confirm('آیا از حذف این گفتگو اطمینان دارید؟')) return;
+
+  const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+  try {
+    const url = `/assistant/api/delete-chat/${conversationId}/`;
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken,
+      }
+    });
+    if (resp.ok) {
+      window.location.href = "{% url 'assistant:chat' %}";
+    }
+  } catch (e) {
+    console.error('Delete error:', e);
+  }
+}
 </script>
 {% endblock %}

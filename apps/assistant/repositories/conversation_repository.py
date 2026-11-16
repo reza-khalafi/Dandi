@@ -94,3 +94,32 @@ class ConversationRepository:
         )
         messages.reverse()
         return messages
+
+    @staticmethod
+    def get_user_conversations(user: User, limit: int = 50) -> list[Conversation]:
+        """
+        Retrieves all past conversations of the user ordered by most recently updated.
+        """
+        return list(
+            Conversation.objects
+            .filter(user=user)
+            .order_by('-updated_at')[:limit]
+        )
+
+    @staticmethod
+    def get_conversation_by_id(user: User, conversation_id: int) -> Optional[Conversation]:
+        """
+        Retrieves a specific conversation owned by the user.
+        """
+        try:
+            return Conversation.objects.get(pk=conversation_id, user=user)
+        except Conversation.DoesNotExist:
+            return None
+
+    @staticmethod
+    def delete_conversation(user: User, conversation_id: int) -> bool:
+        """
+        Deletes a conversation owned by the user.
+        """
+        deleted_count, _ = Conversation.objects.filter(pk=conversation_id, user=user).delete()
+        return deleted_count > 0

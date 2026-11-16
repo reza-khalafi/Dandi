@@ -32,6 +32,7 @@ class ChatApiView(LoginRequiredMixin, View):
             chat_response = AssistantService.process_chat_message(
                 user=request.user,
                 raw_message=chat_request.message,
+                conversation_id=chat_request.conversation_id,
             )
             return JsonResponse(chat_response.model_dump(), status=200)
 
