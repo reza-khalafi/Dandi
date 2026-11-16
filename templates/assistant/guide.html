@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}راهنمای جامع دستیار هوشمند دَندی{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+  
+  <!-- Breadcrumb & Return to Chat -->
+  <div class="mb-8 flex items-center justify-between">
+    <a 
+      href="{% url 'assistant:chat' %}" 
+      class="inline-flex items-center gap-2 text-xs font-bold text-brand-purple hover:text-brand-orange transition duration-200"
+    >
+      <span>←</span>
+      <span>بازگشت به صفحه گفتگو با دستیار</span>
+    </a>
+
+    <span class="px-3 py-1 text-[11px] font-bold rounded-full bg-brand-orange/10 text-brand-orange border border-brand-orange/20">
+      نسخه ۱.۱ • پاییز ۲۰۲۶
+    </span>
+  </div>
+
+  <!-- Hero Header -->
+  <div class="mb-12 border-b border-border-color pb-8">
+    <div class="flex items-center gap-3.5 mb-4">
+      <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-orange to-brand-purple p-[1.5px] shadow-md shadow-brand-purple/20">
+        <div class="w-full h-full rounded-[14px] bg-card-bg flex items-center justify-center">
+          <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+        </div>
+      </div>
+      <div>
+        <h1 class="text-2xl sm:text-3xl font-black text-text-primary tracking-tight">راهنمای استفاده از دستیار هوشمند دَندی</h1>
+        <p class="text-xs sm:text-sm text-text-secondary mt-1">مستندات کاربری، الگوهای گفتگو، ویژگی‌های حافظه و راهنمای دریافت دقیق‌ترین پیشنهادات</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Sections -->
+  <div class="space-y-10 text-xs sm:text-sm text-text-secondary leading-relaxed">
+    
+    <!-- Section 1: Overview -->
+    <section class="p-6 rounded-3xl bg-card-bg border border-border-color shadow-sm space-y-3">
+      <h2 class="text-base sm:text-lg font-black text-text-primary flex items-center gap-2">
+        <span class="w-2 h-5 rounded-full bg-brand-orange"></span>
+        <span>۱. فلسفه وجودی دستیار هوشمند</span>
+      </h2>
+      <p>
+        دستیار هوشمند دَندی یک موتور جستجوی عمومی یا دانشنامه اینترنتی نیست؛ بلکه یک <strong>هم‌صحبت فکری و راهنمای تحریریه مجله دَندی</strong> است. هدف بنیادین این دستیار، واکاوی پرسش‌ها و دغدغه‌های ذهنی شما و پیوند زدن آن‌ها به عمیق‌ترین مقالات، جستارها و پژوهش‌های منتشرشده در دَندی است.
+      </p>
+      <div class="p-4 rounded-2xl bg-bg-secondary border border-border-color text-xs space-y-1">
+        <strong class="text-text-primary">نکته کلیدی:</strong>
+        <p>اگر سوالی کلی یا عمومی بپرسید، دستیار ابتدا توضیحی فشرده ارائه می‌دهد و بلافاصله آن را به یکی از حوزه‌های اندیشه‌ای دَندی (فلسفه، معماری، محیط‌زیست، علم و سبک زندگی) متصل کرده و مقالات مرتبط را معرفی می‌کند.</p>
+      </div>
+    </section>
+
+    <!-- Section 2: Memory System -->
+    <section class="p-6 rounded-3xl bg-card-bg border border-border-color shadow-sm space-y-4">
+      <h2 class="text-base sm:text-lg font-black text-text-primary flex items-center gap-2">
+        <span class="w-2 h-5 rounded-full bg-brand-purple"></span>
+        <span>۲. سازوکار حافظه (کوتاه‌مدت و بلندمدت)</span>
+      </h2>
+      <p>
+        سیستم گفتگوی دَندی مجهز به معماری حافظه دوگانه است تا پیوستگی مکالمه حفظ شده و هیچ اطلاعاتی با رفرش صفحه از بین نرود:
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+        <div class="p-4 rounded-2xl bg-bg-secondary border border-border-color space-y-2">
+          <div class="flex items-center gap-2 text-xs font-bold text-brand-purple">
+            <span>🧠 حافظه کوتاه‌مدت (۱۵ پیام اخیر)</span>
+          </div>
+          <p class="text-xs text-text-secondary leading-relaxed">
+            هنگام هر پاسخ، آخرین ۱۵ پیام رد و بدل شده در نشست به عنوان سابقه به هوش مصنوعی منتقل می‌شود. بنابراین می‌توانید با خیال راحت از ضمایر (مانند «آب‌وهوایش»، «نویسنده‌اش»، «درباره آن بیشتر بگو») استفاده کنید و سیستم موضوع پیام قبلی را به خاطر دارد.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-bg-secondary border border-border-color space-y-2">
+          <div class="flex items-center gap-2 text-xs font-bold text-brand-orange">
+            <span>💾 حافظه بلندمدت (تا ۵۰ پیام در دیتابیس)</span>
+          </div>
+          <p class="text-xs text-text-secondary leading-relaxed">
+            تمام پیام‌ها و کارت‌های مقالات پیشنهادی در پایگاه داده پایدار ذخیره می‌شوند. با رفرش صفحه، بستن مرورگر یا ورود مجدد، تمام مکالمات فعال قبلی به صورت کامل بازخوانی و رندر می‌شوند.
+          </p>
+        </div>
+      </div>
+
+      <div class="pt-2 text-xs">
+        <strong class="text-text-primary">دکمه «گفتگوی جدید»:</strong> اگر موضوع بحث شما عوض شده و می‌خواهید یک گفتگوی کاملاً تازه بدون پیش‌زمینه قبلی داشته باشید، روی دکمه گفتگوی جدید در بالای صفحه چت کلیک کنید.
+      </div>
+    </section>
+
+    <!-- Section 3: Recommendations & Article Cards -->
+    <section class="p-6 rounded-3xl bg-card-bg border border-border-color shadow-sm space-y-3">
+      <h2 class="text-base sm:text-lg font-black text-text-primary flex items-center gap-2">
+        <span class="w-2 h-5 rounded-full bg-emerald-500"></span>
+        <span>۳. پیشنهاد هوشمند مقالات (کارت‌های تصویری)</span>
+      </h2>
+      <p>
+        هنگامی که درباره مفهومی صحبت می‌کنید، دستیار با ابزار اختصاصی به آرشیو دَندی متصل می‌شود و <strong>۲ الی ۴ مقاله گلچین‌شده</strong> را معرفی می‌کند. هر کارت شامل موارد زیر است:
+      </p>
+      <ul class="list-disc list-inside space-y-1.5 text-xs text-text-secondary pr-2">
+        <li>تصویر شاخص با کیفیت مقاله و افکت بزرگ‌نمایی بصری</li>
+        <li>نشان دسته‌بندی موضوعی (فلسفه، علم، معماری، هوش مصنوعی و...)</li>
+        <li>مدت زمان تخمینی مطالعه (دقیقه)</li>
+        <li>خلاصه کوتاه و گزیده از دیدگاه مقاله</li>
+        <li>دکمه مستقیم ورود و مطالعه متن کامل مقاله در تب جدید</li>
+      </ul>
+    </section>
+
+    <!-- Section 4: Prompting Best Practices -->
+    <section class="p-6 rounded-3xl bg-card-bg border border-border-color shadow-sm space-y-3">
+      <h2 class="text-base sm:text-lg font-black text-text-primary flex items-center gap-2">
+        <span class="w-2 h-5 rounded-full bg-amber-500"></span>
+        <span>۴. راهنمای نگارش پرامپت‌های اثربخش</span>
+      </h2>
+      <p>
+        برای دریافت بهترین نتیجه، می‌توانید پرسش‌های خود را با رویکرد مفهومی، نیازهای یادگیری یا مشورت فکری مطرح کنید:
+      </p>
+      <div class="space-y-2 text-xs">
+        <div class="p-3 rounded-xl bg-bg-secondary border border-border-color flex items-start gap-2">
+          <span class="text-emerald-500 font-bold">✓ نمونه عالی:</span>
+          <span>«من در طول روز دچار حواس‌پرتی دیجیتال می‌شوم؛ چه مقالاتی برای تمرکز عمیق، مینیمالیسم و فلسفه رواقی‌گری داری؟»</span>
+        </div>
+        <div class="p-3 rounded-xl bg-bg-secondary border border-border-color flex items-start gap-2">
+          <span class="text-emerald-500 font-bold">✓ نمونه عالی:</span>
+          <span>«می‌خواهم درباره آینده برنامه‌نویسی و ایجنت‌های خودمختار در هوش مصنوعی بیشتر بدانم.»</span>
+        </div>
+        <div class="p-3 rounded-xl bg-bg-secondary border border-border-color flex items-start gap-2">
+          <span class="text-emerald-500 font-bold">✓ نمونه گفتگوی چندمرحله‌ای:</span>
+          <span>پیام اول: «پایتخت ایران کجاست؟» → پیام دوم: «معماری و سبک زندگی شهری‌اش در دندی چه بازتابی داشته؟»</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Rate Limiting & Safety -->
+    <section class="p-6 rounded-3xl bg-card-bg border border-border-color shadow-sm space-y-3">
+      <h2 class="text-base sm:text-lg font-black text-text-primary flex items-center gap-2">
+        <span class="w-2 h-5 rounded-full bg-rose-500"></span>
+        <span>۵. امنیت، رعایت سقف مصرف و تراتلینگ</span>
+      </h2>
+      <p>
+        برای تضمین پایداری سرویس و دسترسی عادلانه تمام اعضای تحریریه، مکانیزم‌های حفاظتی زیر در سامانه فعال هستند:
+      </p>
+      <ul class="list-disc list-inside space-y-1.5 text-xs text-text-secondary pr-2">
+        <li><strong>تراتل و نرخ مجاز:</strong> هر کاربر مجاز به ارسال حداکثر ۱۰ پیام در دقیقه است. در صورت عبور از سقف، پیام هشدار موقت همراه با ثانیه‌شمار بازنشانی نمایش داده می‌شود.</li>
+        <li><strong>محافظت در برابر تزریق پرامپت (Prompt Injection Guardrails):</strong> سیستم نسبت به دستورات نادیده‌گیری قوانین یا دستکاری هویت محافظت شده است.</li>
+        <li><strong>سقف طول پیام:</strong> حداکثر طول هر پیام ۱۰۰۰ کاراکتر تعیین شده تا از ارسال بارهای نامتعارف جلوگیری شود.</li>
+      </ul>
+    </section>
+
+    <!-- Section 6: Future Roadmap -->
+    <section class="p-6 rounded-3xl bg-gradient-to-tr from-brand-orange/5 via-card-bg to-brand-purple/5 border border-brand-purple/20 shadow-sm space-y-3">
+      <h2 class="text-base sm:text-lg font-black text-text-primary flex items-center gap-2">
+        <span class="w-2 h-5 rounded-full bg-gradient-to-b from-brand-orange to-brand-purple"></span>
+        <span>۶. نقشه راه توسعه و قابلیت‌های آتی (Roadmap)</span>
+      </h2>
+      <p class="text-xs">
+        این سند همراه با ارتقای قابلیت‌های هوش مصنوعی دَندی به‌طور پیوسته به‌روزرسانی می‌شود. در نسخه‌های بعدی موارد زیر افزوده خواهند شد:
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1 text-xs">
+        <div class="p-3 rounded-xl bg-card-bg border border-border-color">
+          <strong class="text-brand-purple block mb-1">وکتور دیتابیس (RAG)</strong>
+          <span>جستجوی فوق‌معنایی بر پایه بردارهای عددی در کل متن هزاران کلمه‌ای مقالات.</span>
+        </div>
+        <div class="p-3 rounded-xl bg-card-bg border border-border-color">
+          <strong class="text-brand-orange block mb-1">خلاصه‌سازی فوری</strong>
+          <span>امکان دریافت خلاصه ۳ خطی یا نکات کلیدی هر مقاله با یک دستور در چت.</span>
+        </div>
+        <div class="p-3 rounded-xl bg-card-bg border border-border-color">
+          <strong class="text-emerald-600 dark:text-emerald-400 block mb-1">نشانه‌گذاری و لیست خوانش</strong>
+          <span>اضافه کردن مستقیم مقالات پیشنهادی به فهرست نشان‌شده‌های کاربر از درون چت.</span>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Bottom CTA -->
+  <div class="mt-12 text-center pt-8 border-t border-border-color">
+    <a 
+      href="{% url 'assistant:chat' %}" 
+      class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-brand-orange to-brand-purple text-white font-bold text-xs sm:text-sm shadow-lg shadow-brand-purple/20 hover:opacity-95 hover:shadow-xl transition duration-200"
+    >
+      <span>آغاز گفتگو با دستیار هوشمند</span>
+      <span>←</span>
+    </a>
+  </div>
+
+</div>
+{% endblock %}

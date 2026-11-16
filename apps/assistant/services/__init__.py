@@ -1,3 +1,11 @@
-from apps.assistant.services.assistant_service import AssistantService
+from apps.assistant.services.assistant_service import (
+    AssistantService,
+    RateLimitExceededException,
+)
+from apps.assistant.services.rate_limiter import ChatRateLimiter
 
-__all__ = ['AssistantService']
+__all__ = [
+    'AssistantService',
+    'RateLimitExceededException',
+    'ChatRateLimiter',
+]

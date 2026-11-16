@@ -6,13 +6,20 @@ from apps.assistant.agents.context import AssistantContext
 from apps.assistant.schemas.article_item import ArticleItem
 
 
-def search_dandi_articles(ctx: RunContext[AssistantContext], query: str, limit: int = 4) -> list[dict[str, Any]]:
+MAX_RECOMMENDED_ARTICLES = 3
+
+
+def search_dandi_articles(ctx: RunContext[AssistantContext], query: str, limit: int = 3) -> list[dict[str, Any]]:
     """
     Search published articles in Dandi magazine database by topic, keywords, or title.
-    Returns article details (title, summary, category, url) so the assistant can recommend them to the user.
+    Returns 2 to 3 most relevant articles to recommend to the reader.
     """
     clean_query = query.strip()
     if not clean_query:
+        return []
+
+    # Enforce global turn limit (2 to 4 articles max)
+    if len(ctx.deps.recommended_articles) >= MAX_RECOMMENDED_ARTICLES:
         return []
 
     # 1. Primary search using existing repository method
@@ -33,18 +40,22 @@ def search_dandi_articles(ctx: RunContext[AssistantContext], query: str, limit: 
                 )
             articles_qs = ArticleRepository.get_published().filter(word_q).distinct()
 
-    articles = list(articles_qs[:limit])
+    remaining_slots = MAX_RECOMMENDED_ARTICLES - len(ctx.deps.recommended_articles)
+    effective_limit = min(limit, remaining_slots)
+    articles = list(articles_qs[:effective_limit])
 
     result_data: list[dict[str, Any]] = []
     seen_ids = {a.id for a in ctx.deps.recommended_articles}
 
     for article in articles:
+        if len(ctx.deps.recommended_articles) >= MAX_RECOMMENDED_ARTICLES:
+            break
+
         category_name = article.category.name if article.category else 'عمومی'
         author_name = article.author.username if article.author else 'تحریریه دَندی'
         url = article.get_absolute_url()
         cover_url = article.image.url if article.image else None
 
-        # Build schema item for UI structured card
         item = ArticleItem(
             id=article.id,
             title=article.title,
