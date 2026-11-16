@@ -163,6 +163,8 @@ document.addEventListener('DOMContentLoaded', () => {
     escaped = escaped.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     // Italic *text*
     escaped = escaped.replace(/\*(.*?)\*/g, '<em>$1</em>');
+    // Markdown images ![alt](url)
+    escaped = escaped.replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="rounded-2xl my-3 max-h-56 w-full object-cover border border-border-color shadow-sm">');
     // Markdown links [title](url)
     escaped = escaped.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-brand-orange hover:underline font-bold" target="_blank">$1</a>');
     // Bullet points
@@ -198,32 +200,55 @@ document.addEventListener('DOMContentLoaded', () => {
             <span class="w-1.5 h-1.5 rounded-full bg-brand-orange"></span>
             <span>مقاله‌های پیشنهادی در این موضوع:</span>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             ${articles.map(article => `
               <a 
                 href="${article.url}" 
                 target="_blank" 
-                class="group p-3.5 rounded-xl border border-border-color bg-card-bg hover:border-brand-purple/40 hover:shadow-md hover:shadow-brand-purple/10 transition-all duration-200 flex flex-col justify-between"
+                class="group rounded-2xl border border-border-color bg-card-bg hover:border-brand-purple/50 hover:shadow-lg hover:shadow-brand-purple/10 transition-all duration-300 flex flex-col overflow-hidden text-right"
               >
-                <div>
-                  <div class="flex items-center justify-between mb-1.5">
-                    <span class="text-[10px] font-black px-2 py-0.5 rounded-md bg-brand-purple/10 text-brand-purple">
-                      ${article.category_name || 'دَندی'}
-                    </span>
-                    <span class="text-[10px] text-text-muted">
-                      ${article.reading_time} دقیقه مطالعه
-                    </span>
-                  </div>
-                  <h4 class="text-xs font-bold text-text-primary group-hover:text-brand-orange transition line-clamp-2 leading-snug">
-                    ${article.title}
-                  </h4>
-                  <p class="text-[11px] text-text-secondary line-clamp-2 mt-1.5 leading-relaxed">
-                    ${article.summary || ''}
-                  </p>
+                <!-- Article Cover Image Banner -->
+                <div class="relative aspect-[16/10] w-full overflow-hidden bg-bg-secondary">
+                  ${article.cover_image_url ? `
+                    <img 
+                      src="${article.cover_image_url}" 
+                      alt="${article.title}" 
+                      loading="lazy"
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    >
+                  ` : `
+                    <div class="w-full h-full bg-gradient-to-tr from-brand-orange/20 to-brand-purple/30 flex items-center justify-center">
+                      <span class="text-xs font-bold text-text-muted">مجله دَندی</span>
+                    </div>
+                  `}
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                  
+                  <!-- Category Badge -->
+                  <span class="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-lg text-[10px] font-black backdrop-blur-md bg-black/60 text-white border border-white/20">
+                    ${article.category_name || 'دَندی'}
+                  </span>
+
+                  <!-- Reading Time Badge -->
+                  <span class="absolute bottom-2 right-2.5 text-[10px] text-white/95 font-medium flex items-center gap-1">
+                    <svg class="w-3 h-3 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    ${article.reading_time} دقیقه مطالعه
+                  </span>
                 </div>
-                <div class="mt-3 pt-2 border-t border-border-color/50 flex items-center justify-between text-[11px] font-bold text-brand-purple group-hover:text-brand-orange transition">
-                  <span>مطالعه مقاله</span>
-                  <span class="transform group-hover:-translate-x-1 transition duration-200">←</span>
+
+                <!-- Card Body -->
+                <div class="p-3.5 flex flex-col justify-between flex-1">
+                  <div>
+                    <h4 class="text-xs sm:text-sm font-bold text-text-primary group-hover:text-brand-orange transition line-clamp-2 leading-snug">
+                      ${article.title}
+                    </h4>
+                    <p class="text-[11px] text-text-secondary line-clamp-2 mt-1.5 leading-relaxed">
+                      ${article.summary || ''}
+                    </p>
+                  </div>
+                  <div class="mt-3 pt-2.5 border-t border-border-color/60 flex items-center justify-between text-[11px] font-bold text-brand-purple group-hover:text-brand-orange transition">
+                    <span>مطالعه مقاله</span>
+                    <span class="transform group-hover:-translate-x-1 transition duration-200">←</span>
+                  </div>
                 </div>
               </a>
             `).join('')}

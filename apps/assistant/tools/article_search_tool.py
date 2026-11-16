@@ -70,6 +70,7 @@ def search_dandi_articles(ctx: RunContext[AssistantContext], query: str, limit: 
             'category': category_name,
             'author': author_name,
             'url': url,
+            'image_url': cover_url,
         })
 
     return result_data
