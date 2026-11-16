@@ -1,76 +1,128 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block title %}دَندی | مجله اندیشه‌های آزاد، علم، هنر و جهان نو{% endblock %}
-
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block title %}دَندی | مجله
+اندیشه‌های آزاد، علم، هنر و جهان نو{% endblock %} {% block content %}
 <!-- Full-Row Hero Section with Panoramic Photo -->
-<section id="hero-section" class="relative overflow-hidden pt-12 sm:pt-16 pb-16 sm:pb-20 border-b border-border-color bg-gradient-to-b from-bg-secondary/70 via-bg-primary to-bg-primary">
-  
+<section
+  id="hero-section"
+  class="relative overflow-hidden pt-12 sm:pt-16 pb-16 sm:pb-20 border-b border-border-color bg-gradient-to-b from-bg-secondary/70 via-bg-primary to-bg-primary"
+>
   <!-- Ambient Parallax Lighting Orbs -->
-  <div class="parallax-orb absolute -top-24 right-10 w-[32rem] h-[32rem] rounded-full bg-brand-orange/15 blur-3xl pointer-events-none" data-parallax-factor="25" data-scroll-factor="0.15"></div>
-  <div class="parallax-orb absolute top-28 left-8 w-[30rem] h-[30rem] rounded-full bg-brand-purple/15 blur-3xl pointer-events-none" data-parallax-factor="-30" data-scroll-factor="0.12"></div>
-  <div class="parallax-orb absolute -bottom-16 right-1/3 w-80 h-80 rounded-full bg-amber-400/10 blur-3xl pointer-events-none" data-parallax-factor="15" data-scroll-factor="0.08"></div>
+  <div
+    class="parallax-orb absolute -top-24 right-10 w-[32rem] h-[32rem] rounded-full bg-brand-orange/15 blur-3xl pointer-events-none"
+    data-parallax-factor="25"
+    data-scroll-factor="0.15"
+  ></div>
+  <div
+    class="parallax-orb absolute top-28 left-8 w-[30rem] h-[30rem] rounded-full bg-brand-purple/15 blur-3xl pointer-events-none"
+    data-parallax-factor="-30"
+    data-scroll-factor="0.12"
+  ></div>
+  <div
+    class="parallax-orb absolute -bottom-16 right-1/3 w-80 h-80 rounded-full bg-amber-400/10 blur-3xl pointer-events-none"
+    data-parallax-factor="15"
+    data-scroll-factor="0.08"
+  ></div>
 
   <!-- Decorative Floating Dandelion Seeds -->
-  <div class="floating-seed absolute top-14 right-1/4 pointer-events-none animate-float-slow opacity-60 hidden md:block" data-parallax-factor="45">
-    <img src="{% static 'images/logo.svg' %}" alt="Dandi Seed" class="w-8 h-8 opacity-75">
+  <div
+    class="floating-seed absolute top-14 right-1/4 pointer-events-none animate-float-slow opacity-60 hidden md:block"
+    data-parallax-factor="45"
+  >
+    <img
+      src="{% static 'images/logo.svg' %}"
+      alt="Dandi Seed"
+      class="w-8 h-8 opacity-75"
+    />
   </div>
-  <div class="floating-seed absolute top-36 left-1/4 pointer-events-none animate-float-reverse opacity-50 hidden md:block" data-parallax-factor="-40">
-    <img src="{% static 'images/logo.svg' %}" alt="Dandi Seed" class="w-6 h-6 opacity-60">
+  <div
+    class="floating-seed absolute top-36 left-1/4 pointer-events-none animate-float-reverse opacity-50 hidden md:block"
+    data-parallax-factor="-40"
+  >
+    <img
+      src="{% static 'images/logo.svg' %}"
+      alt="Dandi Seed"
+      class="w-6 h-6 opacity-60"
+    />
   </div>
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-12">
-    
     <!-- Hero Headline & Search Row -->
     <div class="text-center max-w-4xl mx-auto space-y-6">
-      
       <!-- Slogan Pill -->
-      <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full glass-panel border border-brand-purple/20 shadow-sm text-xs font-semibold text-text-primary">
+      <div
+        class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full glass-panel border border-brand-purple/20 shadow-sm text-xs font-semibold text-text-primary"
+      >
         <span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-brand-purple font-bold">
+        <span
+          class="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-brand-purple font-bold"
+        >
           مجله جامع دَندی • Dandi 2026
         </span>
-        <span class="text-text-muted hidden sm:inline">| بذر اندیشه‌های آزاد و نو</span>
+        <span class="text-text-muted hidden sm:inline"
+          >| بذر اندیشه‌های آزاد و نو</span
+        >
       </div>
 
       <!-- Main Headline with Generous Line-Height -->
-      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-text-primary tracking-tight leading-[1.65]">
-        روایت ژرف <br class="hidden sm:inline">
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange via-amber-500 to-brand-purple">
+      <h1
+        class="text-3xl sm:text-5xl lg:text-6xl font-black text-text-primary tracking-tight leading-[1.65]"
+      >
+        روایت ژرف <br class="hidden sm:inline" />
+        <span
+          class="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange via-amber-500 to-brand-purple"
+        >
           اندیشه‌ها، علم، هنر و جهان نو
         </span>
       </h1>
 
       <!-- Subtitle with comfortable leading -->
-      <p class="text-sm sm:text-base text-text-secondary leading-[1.9] max-w-2xl mx-auto font-normal">
-        دَندی بستری آزاد برای کاوش، یادگیری و تامل در قلمروهای گوناگون معرفت بشری است؛ از ژرفای فلسفه و سبک زندگی معاصر تا مرزهای کیهان‌شناسی، تفکر سیستمی و آفرینش هنری.
+      <p
+        class="text-sm sm:text-base text-text-secondary leading-[1.9] max-w-2xl mx-auto font-normal"
+      >
+        دَندی بستری آزاد برای کاوش، یادگیری و تامل در قلمروهای گوناگون معرفت
+        بشری است؛ از ژرفای فلسفه و سبک زندگی معاصر تا مرزهای کیهان‌شناسی، تفکر
+        سیستمی و آفرینش هنری.
       </p>
 
       <!-- Prominent Search Box -->
       <div class="pt-2 max-w-2xl mx-auto relative group">
-        <div class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-brand-orange to-brand-purple opacity-30 group-hover:opacity-60 blur-lg transition duration-500"></div>
-        <div class="relative flex items-center glass-panel rounded-2xl border border-border-color shadow-2xl p-2.5">
+        <div
+          class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-brand-orange to-brand-purple opacity-30 group-hover:opacity-60 blur-lg transition duration-500"
+        ></div>
+        <div
+          class="relative flex items-center glass-panel rounded-2xl border border-border-color shadow-2xl p-2.5"
+        >
           <div class="p-3 text-brand-purple">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              ></path>
             </svg>
           </div>
-          <input 
-            type="text" 
-            id="hero-search-input" 
+          <input
+            type="text"
+            id="hero-search-input"
             value="{{ search_query|default:'' }}"
-            placeholder="جستجو در میان ۵۰ مقاله جامع، موضوعات یا نویسندگان دَندی..." 
+            placeholder="جستجو در میان ۵۰ مقاله جامع، موضوعات یا نویسندگان دَندی..."
             class="w-full bg-transparent px-3 py-2 text-sm text-text-primary placeholder-text-muted focus:outline-none"
-          >
+          />
           {% if search_query %}
-            <a href="{% url 'articles:home' %}" class="px-3.5 py-1.5 text-xs text-rose-500 hover:text-rose-600 font-bold ml-2">
-              پاک کردن
-            </a>
+          <a
+            href="{% url 'articles:home' %}"
+            class="px-3.5 py-1.5 text-xs text-rose-500 hover:text-rose-600 font-bold ml-2"
+          >
+            پاک کردن
+          </a>
           {% endif %}
         </div>
       </div>
-
     </div>
 
     <!-- FULL ROW PANORAMIC HERO IMAGE (Ultra-Crisp & Clean Centerpiece) -->
@@ -81,135 +133,245 @@
             src="{% static 'images/hero-art.jpg' %}" 
             alt="Dandi Panoramic Landscape" 
             class="w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-700"
-          >
+          />
           <!-- Subtle soft bottom shadow for natural transition -->
           <div class="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none"></div>
         </div>
       </div>
     </div>
-
   </div>
 </section>
 
 <!-- REDESIGNED TOPIC DISCOVERY BOARD (Card-based & Functional Category Showcase) -->
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-    
     <!-- Option 0: All Categories Card -->
-    <a href="{% url 'articles:home' %}{% if search_query %}?q={{ search_query }}{% endif %}" 
-       class="group relative rounded-3xl p-[1px] transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 block
-       {% if not selected_category %}bg-gradient-to-r from-brand-orange to-brand-purple ring-2 ring-brand-purple/30{% else %}bg-gradient-to-b from-border-color to-transparent hover:from-brand-purple/40{% endif %}">
-      <div class="h-full rounded-[23px] bg-card-bg p-5 sm:p-6 flex flex-col justify-between">
+    <a
+      href="{% url 'articles:home' %}{% if search_query %}?q={{ search_query }}{% endif %}"
+      class="group relative rounded-3xl p-[1px] transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 block {% if not selected_category %}bg-gradient-to-r from-brand-orange to-brand-purple ring-2 ring-brand-purple/30{% else %}bg-gradient-to-b from-border-color to-transparent hover:from-brand-purple/40{% endif %}"
+    >
+      <div
+        class="h-full rounded-[23px] bg-card-bg p-5 sm:p-6 flex flex-col justify-between"
+      >
         <div class="space-y-3">
           <div class="flex items-center justify-between">
-            <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-orange to-brand-purple flex items-center justify-center text-white shadow-sm">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+            <div
+              class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-orange to-brand-purple flex items-center justify-center text-white shadow-sm"
+            >
+              <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+                ></path>
+              </svg>
             </div>
-            <span class="px-2.5 py-1 rounded-xl text-[11px] font-black {% if not selected_category %}bg-brand-purple text-white{% else %}bg-bg-secondary text-text-muted{% endif %}">
+            <span
+              class="px-2.5 py-1 rounded-xl text-[11px] font-black {% if not selected_category %}bg-brand-purple text-white{% else %}bg-bg-secondary text-text-muted{% endif %}"
+            >
               {{ total_count }} مقاله
             </span>
           </div>
           <div>
-            <h3 class="text-base font-black text-text-primary group-hover:text-brand-orange transition-colors">همه قلمروها</h3>
-            <p class="text-xs text-text-muted leading-relaxed mt-1">دسترسی جامع به ۵۰ جستار منتشر شده در تمامی حوزه‌ها</p>
+            <h3
+              class="text-base font-black text-text-primary group-hover:text-brand-orange transition-colors"
+            >
+              همه قلمروها
+            </h3>
+            <p class="text-xs text-text-muted leading-relaxed mt-1">
+              دسترسی جامع به ۵۰ جستار منتشر شده در تمامی حوزه‌ها
+            </p>
           </div>
         </div>
-        
-        <div class="pt-4 mt-2 border-t border-border-color/60 flex items-center justify-between text-xs font-bold {% if not selected_category %}text-brand-orange{% else %}text-text-muted group-hover:text-text-primary{% endif %}">
-          <span>{% if not selected_category %}قلمرو انتخاب شده ✓{% else %}نمایش همه مقالات{% endif %}</span>
-          <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+
+        <div
+          class="pt-4 mt-2 border-t border-border-color/60 flex items-center justify-between text-xs font-bold {% if not selected_category %}text-brand-orange{% else %}text-text-muted group-hover:text-text-primary{% endif %}"
+        >
+          <span
+            >{% if not selected_category %}قلمرو انتخاب شده ✓{% else %}نمایش همه
+            مقالات{% endif %}</span
+          >
+          <svg
+            class="w-4 h-4 rotate-180"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M14 5l7 7m0 0l-7 7m7-7H3"
+            ></path>
+          </svg>
         </div>
       </div>
     </a>
 
     <!-- Category Cards -->
     {% for category in categories %}
-      <a href="{% url 'articles:home' %}?category={{ category.slug }}{% if search_query %}&q={{ search_query }}{% endif %}" 
-         class="group relative rounded-3xl p-[1px] transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 block
-         {% if selected_category == category.slug %}bg-gradient-to-r from-brand-orange to-brand-purple ring-2 ring-brand-purple/30{% else %}bg-gradient-to-b from-border-color to-transparent hover:from-brand-purple/40{% endif %}">
-        <div class="h-full rounded-[23px] bg-card-bg p-5 sm:p-6 flex flex-col justify-between">
-          <div class="space-y-3">
-            <div class="flex items-center justify-between">
-              
-              <!-- Topic Icon -->
-              <div class="w-10 h-10 rounded-2xl flex items-center justify-center text-white shadow-sm
-                {% if forloop.counter == 1 %}bg-gradient-to-tr from-orange-500 to-amber-500
-                {% elif forloop.counter == 2 %}bg-gradient-to-tr from-violet-600 to-indigo-500
-                {% else %}bg-gradient-to-tr from-pink-500 to-purple-500{% endif %}">
-                {% if forloop.counter == 1 %}
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                {% elif forloop.counter == 2 %}
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
-                {% else %}
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>
-                {% endif %}
-              </div>
-
-              <!-- Count Badge -->
-              <span class="px-2.5 py-1 rounded-xl text-[11px] font-black {% if selected_category == category.slug %}bg-brand-orange text-white{% else %}bg-bg-secondary text-text-muted{% endif %}">
-                {{ category.published_articles_count }} مقاله
-              </span>
+    <a
+      href="{% url 'articles:home' %}?category={{ category.slug }}{% if search_query %}&q={{ search_query }}{% endif %}"
+      class="group relative rounded-3xl p-[1px] transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 block {% if selected_category == category.slug %}bg-gradient-to-r from-brand-orange to-brand-purple ring-2 ring-brand-purple/30{% else %}bg-gradient-to-b from-border-color to-transparent hover:from-brand-purple/40{% endif %}"
+    >
+      <div
+        class="h-full rounded-[23px] bg-card-bg p-5 sm:p-6 flex flex-col justify-between"
+      >
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <!-- Topic Icon -->
+            <div
+              class="w-10 h-10 rounded-2xl flex items-center justify-center text-white shadow-sm {% if forloop.counter == 1 %}bg-gradient-to-tr from-orange-500 to-amber-500 {% elif forloop.counter == 2 %}bg-gradient-to-tr from-violet-600 to-indigo-500 {% else %}bg-gradient-to-tr from-pink-500 to-purple-500{% endif %}"
+            >
+              {% if forloop.counter == 1 %}
+              <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                ></path>
+              </svg>
+              {% elif forloop.counter == 2 %}
+              <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
+                ></path>
+              </svg>
+              {% else %}
+              <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+                ></path>
+              </svg>
+              {% endif %}
             </div>
 
-            <div>
-              <h3 class="text-base font-black text-text-primary group-hover:text-brand-orange transition-colors">{{ category.name }}</h3>
-              <p class="text-xs text-text-muted leading-relaxed mt-1 line-clamp-2">{{ category.description }}</p>
-            </div>
+            <!-- Count Badge -->
+            <span
+              class="px-2.5 py-1 rounded-xl text-[11px] font-black {% if selected_category == category.slug %}bg-brand-orange text-white{% else %}bg-bg-secondary text-text-muted{% endif %}"
+            >
+              {{ category.published_articles_count }} مقاله
+            </span>
           </div>
-          
-          <div class="pt-4 mt-2 border-t border-border-color/60 flex items-center justify-between text-xs font-bold {% if selected_category == category.slug %}text-brand-orange{% else %}text-text-muted group-hover:text-text-primary{% endif %}">
-            <span>{% if selected_category == category.slug %}قلمرو انتخاب شده ✓{% else %}مشاهده مقالات این قلمرو{% endif %}</span>
-            <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+
+          <div>
+            <h3
+              class="text-base font-black text-text-primary group-hover:text-brand-orange transition-colors"
+            >
+              {{ category.name }}
+            </h3>
+            <p
+              class="text-xs text-text-muted leading-relaxed mt-1 line-clamp-2"
+            >
+              {{ category.description }}
+            </p>
           </div>
         </div>
-      </a>
-    {% endfor %}
 
+        <div
+          class="pt-4 mt-2 border-t border-border-color/60 flex items-center justify-between text-xs font-bold {% if selected_category == category.slug %}text-brand-orange{% else %}text-text-muted group-hover:text-text-primary{% endif %}"
+        >
+          <span
+            >{% if selected_category == category.slug %}قلمرو انتخاب شده ✓{% else %}مشاهده مقالات این قلمرو{% endif %}</span
+          >
+          <svg
+            class="w-4 h-4 rotate-180"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M14 5l7 7m0 0l-7 7m7-7H3"
+            ></path>
+          </svg>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
   </div>
 </section>
 
 <!-- Content Section: Featured & Articles Feed -->
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-
   <!-- Featured Highlights Banner (Shown when no category filter is applied) -->
   {% if not selected_category and not search_query and featured_articles %}
-    <div class="mb-20">
-      <div class="flex items-center gap-3 mb-8">
-        <span class="w-3 h-3 rounded-full bg-amber-400 animate-pulse"></span>
-        <h2 class="text-2xl font-black text-text-primary">مقاله‌های ویژه و برگزیده دَندی</h2>
-      </div>
-      
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {% for article in featured_articles %}
-          <div class="transform hover:-translate-y-1.5 transition duration-300">
-            {% include 'components/article_card.html' with article=article %}
-          </div>
-        {% endfor %}
-      </div>
+  <div class="mb-20">
+    <div class="flex items-center gap-3 mb-8">
+      <span class="w-3 h-3 rounded-full bg-amber-400 animate-pulse"></span>
+      <h2 class="text-2xl font-black text-text-primary">
+        مقاله‌های ویژه و برگزیده دَندی
+      </h2>
     </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {% for article in featured_articles %}
+      <div class="transform hover:-translate-y-1.5 transition duration-300">
+        {% include 'components/article_card.html' with article=article %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
   {% endif %}
 
   <!-- Articles Dynamic Grid -->
   <div>
-    <div class="flex items-center justify-between mb-10 pb-4 border-b border-border-color">
-      <h2 class="text-xl sm:text-2xl font-black text-text-primary flex items-center gap-3">
-        <span class="w-2.5 h-8 rounded-full bg-gradient-to-b from-brand-orange to-brand-purple"></span>
+    <div
+      class="flex items-center justify-between mb-10 pb-4 border-b border-border-color"
+    >
+      <h2
+        class="text-xl sm:text-2xl font-black text-text-primary flex items-center gap-3"
+      >
+        <span
+          class="w-2.5 h-8 rounded-full bg-gradient-to-b from-brand-orange to-brand-purple"
+        ></span>
         <span>
-          {% if selected_category %}مقالات قلمرو «{{ selected_category }}»
-          {% elif search_query %}نتایج جستجو برای: «{{ search_query }}»
-          {% else %}تازه‌ترین جستارها و مقالات دَندی{% endif %}
+          {% if selected_category %}مقالات قلمرو «{{ selected_category }}» {% elif search_query %}نتایج جستجو برای: «{{ search_query }}» {% else %}تازه‌ترین جستارها و مقالات دَندی{% endif %}
         </span>
       </h2>
 
       <!-- Total Results Badge -->
-      <span id="result-count-badge" class="px-4 py-1.5 rounded-full text-xs font-black bg-brand-orange/10 text-brand-orange border border-brand-orange/20">
+      <span
+        id="result-count-badge"
+        class="px-4 py-1.5 rounded-full text-xs font-black bg-brand-orange/10 text-brand-orange border border-brand-orange/20"
+      >
         {{ total_count }} مقاله موجود
       </span>
     </div>
 
     <!-- The Feed Container (Dynamically updated via Infinite Scroll & Live Search) -->
-    <div 
-      id="articles-feed-container" 
+    <div
+      id="articles-feed-container"
       class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
       data-has-next="{% if articles_page.has_next %}true{% else %}false{% endif %}"
       data-category="{{ selected_category|default:'' }}"
@@ -219,27 +381,50 @@
     </div>
 
     <!-- Loading Spinner Indicator -->
-    <div id="feed-loading-spinner" class="hidden py-14 flex flex-col items-center justify-center gap-3">
-      <div class="w-10 h-10 border-3 border-brand-purple/20 border-t-brand-orange rounded-full animate-spin"></div>
-      <span class="text-xs font-semibold text-text-muted">در حال بارگذاری مقالات بعدی...</span>
+    <div
+      id="feed-loading-spinner"
+      class="hidden py-14 flex flex-col items-center justify-center gap-3"
+    >
+      <div
+        class="w-10 h-10 border-3 border-brand-purple/20 border-t-brand-orange rounded-full animate-spin"
+      ></div>
+      <span class="text-xs font-semibold text-text-muted"
+        >در حال بارگذاری مقالات بعدی...</span
+      >
     </div>
 
     <!-- Scroll Sentinel for Intersection Observer -->
-    <div id="scroll-sentinel" class="w-full h-10 {% if not articles_page.has_next %}hidden{% endif %}"></div>
+    <div
+      id="scroll-sentinel"
+      class="w-full h-10 {% if not articles_page.has_next %}hidden{% endif %}"
+    ></div>
 
     <!-- Fallback Manual Load More Button -->
-    <div class="mt-12 text-center {% if not articles_page.has_next %}hidden{% endif %}" id="manual-load-more-btn-wrapper">
-      <button 
-        id="manual-load-more-btn" 
-        type="button" 
-        class="px-8 py-3.5 rounded-2xl glass-panel border border-border-color hover:border-brand-purple/50 text-xs font-bold text-text-primary shadow-sm hover:shadow-md transition duration-200 inline-flex items-center gap-2.5">
+    <div
+      class="mt-12 text-center {% if not articles_page.has_next %}hidden{% endif %}"
+      id="manual-load-more-btn-wrapper"
+    >
+      <button
+        id="manual-load-more-btn"
+        type="button"
+        class="px-8 py-3.5 rounded-2xl glass-panel border border-border-color hover:border-brand-purple/50 text-xs font-bold text-text-primary shadow-sm hover:shadow-md transition duration-200 inline-flex items-center gap-2.5"
+      >
         <span>بارگذاری مقالات بیشتر</span>
-        <svg class="w-4 h-4 text-brand-orange animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        <svg
+          class="w-4 h-4 text-brand-orange animate-bounce"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 14l-7 7m0 0l-7-7m7 7V3"
+          ></path>
         </svg>
       </button>
     </div>
-
   </div>
 </section>
 {% endblock %}
