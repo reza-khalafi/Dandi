@@ -54,6 +54,7 @@ class HomeView(View):
         context = {
             'categories': categories,
             'articles_page': articles_page,
+            'articles': articles_page.object_list,
             'elided_page_range': elided_page_range,
             'featured_articles': featured_articles,
             'selected_category': category_slug,
