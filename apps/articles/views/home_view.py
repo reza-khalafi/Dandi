@@ -25,7 +25,7 @@ class HomeView(View):
             query=query,
             category_slug=category_slug,
             page=page,
-            per_page=10
+            per_page=12
         )
         featured_articles = self.article_service.get_featured_articles(limit=3)
 
